@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8" />		
+		<meta http-equiv="Cache-control" content="NO-CACHE">	
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">		
+		<link rel="stylesheet" href="./css/main.css">	
+		<link rel="stylesheet" href="./css/jquery-ui.css">	
+		
+		<script type="text/javascript" src="./js/external/jquery/jquery.js"></script>
+		<script type="text/javascript" src="./js/jquery-ui.js"></script>
+		<script type="text/javascript" src="./js/jquery-ui-datepicker-ru.js"></script>
+		<script type="text/javascript" src="./js/jquery.main.js"></script>	
+		
+		<script type="text/javascript" src="./js/core.js"></script><!--  Основная логика сайта  -->
+		
+    </head>
+    <body>
+		<title>Рейсы</title>
+		<div id="layerA">
+			<h1>Рейсы</h1>
+
+			<div id="age">
+			</div>
+
+			<?php
+				# Cоздать соединение
+				$pdo = connectToBase();
+				
+				//Подготовить переменные и выполнить запрос к базе
+				$stmt = $pdo->prepare('SELECT `full_name` FROM `users` WHERE `user_id` = :id_in_db');
+				$stmt->execute(array('id_in_db' => $user_id));
+				
+				while ($row = $stmt->fetch()) {
+					$user_full_name = $row['full_name'];
+				}
+				echo "Охранник: ".$user_full_name . "\n";
+				
+				//Подготовить переменные и выполнить запрос к базе	
+				$stmt = $pdo->prepare("SELECT `data_vyezda` FROM `flights` WHERE `fio` = :user_full_name");
+				$stmt->execute(array('user_full_name' => $user_full_name));
+				//Обработать запрос, переведя ВСЕ данные в массив $table_array
+				$table_array = $stmt->fetchAll();
+				
+				$array_date_of_departure = Array();
+				$i = 0;
+				foreach ($table_array as $date_of_departure) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
+					//echo $date_of_departure['data_vyezda'] . "\n";
+					$array_date_of_departure[$i] = $date_of_departure['data_vyezda'];
+					$i = $i+1;
+				}
+				//print_r ($array_date_of_departure);
+				//echo "$array_date_of_departure[1]". "\n";
+
+				//Отправляем масив дат выездов js-скрипту
+				$js_array = json_encode($array_date_of_departure);
+				echo '<script language="javascript">var array_date_of_departure = '.$js_array.';</script>';
+				
+			?>
+
+			
+			<!--  Блок модального окна -->			
+			<div id="modal_form"><!-- Сaмo oкнo --> 
+				<span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 
+				<!-- Тут любoе сoдержимoе -->
+				<div class="div_table_info_flight">
+					<div class="div_line_info">
+						<div class="left_div">№ рейса</div>
+						<div class="right_div" id="div_right_string0"></div>
+					</div><br />
+					<div class="div_line_info">
+						<div class="left_div">Дата выезда</div>
+						<div class="right_div" id="div_right_string1"></div>
+					</div><br />
+					<div class="div_line_info">	
+						<div class="left_div">Время</div>
+						<div class="right_div" id="div_right_string2"></div>
+					</div><br />
+					<div class="div_line_info">	
+						<div class="left_div">Клиент</div>
+						<div class="right_div" id="div_right_string3"></div>		
+					</div><br />
+					<div class="div_line_info">	
+						<div id="div_right_string5"></div> 
+						<div id="div_right_string6"></div>
+					</div><br />
+				</div>
+				<div class="div_table_info_flight">
+					<div class="left_div">№ машины</div>
+					<div class="right_div" id="div_right_string4"></div> 
+				</div>
+				
+				<div class="div_line_info">Принятие</div>
+				<div class="div_line_info" id="div_right_string7"></div> 
+				<div class="div_line_info">Сдача</div>
+				<div class="div_line_info" id="div_right_string8"></div>
+				
+				<!-- Загрузка фотографий на сервер-->
+				<!-- https://wpcafe.org/hacks/ajax-zagruzka-faylov-na-server-s-pomoshhyu-jquery/ -->
+				<div class="wrapper">
+					<form class="fileform" name="upload">
+						<div class="selectbutton">Сделать фото</div>
+						<input id="upload" type="file" name="myfile">
+					</form>
+					<div id="status">					
+					</div>
+
+					<div class="ajax-respond" id="ajax_respond"><!-- Ответ сервера на загрузку фото -->
+						<img src='./img/success.png' alt='OK' />
+					</div>
+				</div>
+
+			</div>
+			<div id="overlay"></div><!-- Пoдлoжкa -->
+	
+
+			
+<!-- Блок экспериментов-->
+
+
+
+
+
+
+<!-- /Блок экспериментов-->
+		</div> <!-- Конец layerA -->
+
+	</body>		
+</html>
+
+
+				

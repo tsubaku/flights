@@ -1,0 +1,666 @@
+/* Simple tags ======================================================== */
+
+body {
+	background: #eeeeee;
+}
+
+h1 {
+    font: normal 26px Arial, serif;
+	margin-top: 0;
+	margin-left: 15px;
+	margin-bottom: 10px; /* Отрицательный отступ между заголовком и текстом */
+	color: #91784B;
+	text-align: left; /* Выравнивание по ширине */
+	font-weight: bold;
+}
+h2 {
+    font: normal 26px Arial, serif;
+	margin-top: 0;
+	margin-bottom: 10px; /* Отрицательный отступ между заголовком и текстом */
+	color: #C0A062;
+	text-align: center; /* Выравнивание по ширине */
+	font-weight: bold;
+}
+h3 {
+    font: bold 16px Arial, serif;
+	margin-top: 0;
+	margin-bottom: 10px; /* Отрицательный отступ между заголовком и текстом */
+	color: #C0A062;
+	text-align: center; /* Выравнивание по ширине */
+	font-weight: bold;
+}
+
+
+
+
+/* Blocks and selectors *******************************************/
+#layerA {
+	position:absolute;
+	display:block;
+}
+
+#layerB {
+	position:absolute;
+	display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+}
+
+.page {
+	display:inline-block;
+	height: 30px;
+	width: 100px;
+	background: #bebede;
+	border: 1px, #fefede;
+	border-radius: 3px;
+	text-align: center; /* Выравнивание по ширине */
+}
+
+
+
+/***  Buttons   *********************************/
+.a_demo_three {	
+	float: left;
+	display: inline-block;
+	font-family: 'Open Sans', sans-serif;
+	font-size:12px;
+	text-decoration:none;
+	color:#fff;
+	position:relative;
+	padding:10px 10px;  /* Отступ по высоте и по ширине */
+	margin-left:35px;
+	margin-top:0px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;	
+}
+
+.a_demo_three:active {
+	top:3px;
+}
+
+.a_demo_three::before {	
+	content:"";
+	width:35px;
+	max-height:29px;
+	height:100%;
+	position:absolute;
+	display:block;
+	padding-top:8px;
+	top:0px;
+	left:-36px;
+	font-size:16px;
+	font-weight:bold;	 
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;	
+}
+
+.a_demo_three:active::before {
+	top:-3px;	
+}
+
+
+.b_blue {
+	background-color:#3bb3e0;
+	border-left:solid 1px #2ab7ec;
+	background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #156785, 0px 10px 5px #999;
+}
+.b_blue:active {
+	background-image: linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #156785, 0px 5px 3px #999;
+}
+.b_blue::before {
+	background-color:#3bb3e0;
+	color:#8fd1ea;
+	text-shadow:1px 1px 0px #07526e;
+	border-right:solid 1px #07526e;
+	background-image: linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
+	box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 0px 10px 5px #999 ;
+}
+.b_blue:active::before {
+	box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 1px 1px 0px 0px #044a64, 2px 2px 0px 0px #044a64, 2px 5px 0px 0px #044a64, 6px 4px 2px #0b698b, 0px 10px 5px #999 ;
+}
+
+
+.b_red {
+	background-color:#FA5704;
+	border-left:solid 1px #FFB7EC;
+	background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	box-shadow: inset 0px 1px 0px #E8527F, 0px 5px 0px 0px #E24724, 0px 10px 5px #999;
+}
+.b_red:active {
+	background-image: linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+	box-shadow: inset 0px 1px 0px #E8527F, 0px 2px 0px 0px #E24724, 0px 5px 3px #999;
+}
+.b_red::before {
+	background-color:#FA5704;
+	color:#FFD1EA;
+	text-shadow:1px 1px 0px #6D2D07;
+	border-right:solid 1px #6D2D07;
+	background-image: linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
+	box-shadow:inset 0px 1px 0px #E8527F, 0px 5px 0px 0px #BE2B3A, 0px 10px 5px #999 ;
+}
+.b_red:active::before {
+	box-shadow:inset 0px 1px 0px #E8527F, 0px 5px 0px 0px #BE2B3A, 1px 1px 0px 0px #FF2764, 2px 2px 0px 0px #FF2764, 2px 5px 0px 0px #FF2764, 6px 4px 2px #E16961, 0px 10px 5px #999 ;
+}
+
+
+.b_green {
+	background-color:#6fba26;
+	border-left:solid 1px #86C155;
+	background-image: linear-gradient(bottom, rgb(100,170,30) 0%, rgb(129,212,51) 100%);
+	box-shadow: inset 0px 1px 0px #86C155, 0px 5px 0px 0px #3d6f0d, 0px 10px 5px #999;
+}
+.b_green:active {
+	background-image: linear-gradient(bottom, rgb(100,170,30) 0%, rgb(129,212,51) 100%);
+	box-shadow: inset 0px 1px 0px #86C155, 0px 2px 0px 0px #3d6f0d, 0px 5px 3px #999;
+}
+.b_green::before {
+	background-color:#6fba26;
+	color:#FFD1EA;
+	text-shadow:1px 1px 0px #325411;
+	border-right:solid 1px #325411;
+	background-image: linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
+	box-shadow:inset 0px 1px 0px #86C155, 0px 5px 0px 0px #03593A, 0px 10px 5px #999 ;
+}
+.b_green:active::before {
+	box-shadow:inset 0px 1px 0px #86C155, 0px 5px 0px 0px #03593A, 1px 1px 0px 0px #00680A, 2px 2px 0px 0px #00680A, 2px 5px 0px 0px #00680A, 6px 4px 2px #0b698b, 0px 10px 5px #999;
+}
+
+#a_add_line::before {
+	background-image: url(../img/add_line.png);
+}
+
+#a_show_flights_table::before {
+	background-image: url(../img/show_flights_table.png);
+}
+
+.button_container {
+	margin-left: 10px;
+	float: left;
+	display: inline-block;
+}
+
+.a_button_photo {
+	display: inline-block;
+	background-image: url(../img/photo.png);
+	background-size: cover; /* Фон занимает всю доступную площадь */
+	height:23px;
+	width: 23px;
+	float: left;
+	padding-right: 2px;
+	vertical-align: top;
+}
+.a_button_no_photo{
+	display: inline-block;
+	background-image: url(../img/no_photo.png);
+	background-size: cover; /* Фон занимает всю доступную площадь */
+	height:23px;
+	width: 23px;
+	float: left;
+	padding-right: 2px;
+	vertical-align: top;
+}
+
+.a_button_delete {
+	display: inline-block;
+	background-image: url(../img/del_object_v1.png);
+	background-size: cover; /* Фон занимает всю доступную площадь */
+	height:23px;
+	width: 23px;
+	float: right;
+	padding-right: 2px;
+	vertical-align: top;
+}
+
+
+/*	--- Button Send photo --- -*/
+.fileform { 
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 50px;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 120px;
+}
+ 
+.fileform .selectbutton { 
+    background-color: #A2A3A3;
+    border: 1px solid #939494;
+    border-radius: 2px;
+    color: #FFFFFF;
+    float: right;
+    font-size: 16px;
+    height: 50px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 2px 6px;
+    text-align: center;
+    vertical-align: middle;
+    width: 120px;
+}
+ 
+.fileform #upload{
+    position:absolute; 
+    top:0; 
+    left:30; 
+    width:100%; 
+    -moz-opacity: 0; 
+    filter: alpha(opacity=0); 
+    opacity: 0; 
+    font-size: 150px; 
+    height: 50px; 
+    z-index:20;
+}
+/*	------------------	*/
+
+
+/**************************** Table content ************************/
+table{
+    display: table;
+	border: 1px solid #777; /* Параметры рамки */
+	border-collapse: collapse; /* Убираем двойные линии между ячейками */
+	background: #9d9;
+	width: 100%; /* Ширина таблицы в процентах */
+/*	table-layout: auto;	*/
+	float: left;
+}
+tr {
+    display: table-row;
+	border: 0px solid #451; /* Параметры рамки */
+	padding: 0px;
+	
+}
+td { 
+	border: 1px solid #951; /* Параметры рамки */
+	height: 23px;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+input {
+	width:100%;
+	height:100%;
+	padding: 0px; /* Поля вокруг текста */
+	margin: 0px; /* Отступы вокруг */
+	border: 0px;
+	font: normal 16px Verdana, sans-serif
+}
+
+
+
+/**** Table Column Classes *****************************************/
+.id {
+	width:55px;
+	display: inline-block;
+}		
+.data_vyezda{
+	width:150px;
+}
+.vremja {
+	width:60px;
+}
+.klient { 
+	width:150px;
+}
+.podklient { 
+	width:150px;	
+}
+.nomer_mashiny { 
+	width:80px; 
+	background: #C794CC;
+}
+.nomer_mashiny_mobi{ 
+	width:150px; 
+	background: #ffd;
+	font-size:32px;
+	border: 1px #fda solid;
+}
+.prinjatie_pod_ohranu {
+	width:100px;
+}
+.sdacha_s_ohrany {
+	width:100px;
+}
+.sostav_ohr {
+	width:100px;
+}
+.fio {
+	width:100px;
+}
+.vydano {
+	width:80px;
+}
+.mashina {
+	width:100px;
+}
+.srok_dostavki {
+	width:68px;
+}
+.prinjatie {
+	width:210px;
+	background: #C794CC;
+}
+.prinjatie_mobi{
+	width:280px;
+	background: #ffd;
+	font-size:24px;
+	border: 1px #fda solid;
+}
+.sdacha {
+	width:210px;
+	background: #C794CC;
+}
+.sdacha_mobi {
+	width:280px;
+	background: #ffd;
+	font-size:24px;
+	border: 1px #fda solid;
+}
+.fakticheskij_srok_dostavki {
+	width:80px;
+	background: #6ac;
+}
+.prostoj_chasy {
+	width:70px;
+}
+.prostoj_stavka_za_ohrannika {
+	width:80px;
+}
+.prostoj_summa {
+	width:80px;
+	background: #6ac;
+}
+.stavka_bez_nds {
+	width:80px;
+}
+.stavka_s_nds {
+	width:80px;
+}
+.schet {
+	width:90px;
+	background: #6ac;
+}
+.zp {
+	width:70px;
+}
+.prostoj {
+	width:70px;
+}
+.arenda_mashin {
+	width:70px;
+}
+.oplata_mashin {
+	width:70px;
+	background: #6ac;
+}
+.itogo {
+	width:70px;
+	background: #6ac;
+}
+.zp_plus_prostoj {
+	width:95px;
+	background: #6ac;
+}
+
+.container_default {
+	display: inline-block;
+	width:110%;
+	height:100%;
+}
+.container_id {
+	display: inline-block;
+	width:110px;
+	height:100%;
+}
+
+.completed {
+	color: #1C57D8;
+	font: bold;
+}
+
+
+/********************** Modal forms **********************/
+#modal_form {
+	width: 90%; 
+	height: 90%; 
+	border-radius: 5px;
+	border: 3px #000 solid;
+	background: #abc;
+	position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
+	top: 5%; 		/* oтступaем сверху 5% */
+	display: none; 	/* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+	opacity: 0; 	/* пoлнoстью прoзрaчнo для aнимирoвaния */
+	z-index: 5; 	/* oкнo дoлжнo быть сверху */
+	padding: 2px 2px;
+}
+
+#modal_form #modal_close {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: -15px;
+	right: 5px;
+	cursor: pointer;
+	display: block;
+	border: 3px #555 solid;
+	background: #789;
+	z-index: 10; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+	border-radius: 5px;
+}
+
+#overlay {
+	z-index:3; 			/* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
+	position:fixed; 	/* всегдa перекрывaет весь сaйт */
+	background-color:#000; /* чернaя */
+	opacity:0.8; 		/* нo немнoгo прoзрaчнa */
+	-moz-opacity:0.8; 	/* фикс прозрачности для старых браузеров */
+	filter:alpha(opacity=80);
+	width:100%; 
+	height:100%; 		/* рaзмерoм вo весь экрaн */
+	top:0; 				/* сверху и слевa 0, oбязaтельные свoйствa! */
+	left:0;
+	cursor:pointer;
+	display:none; 		/* в oбычнoм сoстoянии её нет */
+}
+
+
+/*	Оформление внутренностей модального окна с информацией о рейсе		*/
+.div_table_info_flight {
+	background-color:#7A9BFF; /* бледно-синий */
+	display: block;
+	float: left;
+	position:relative;
+	border: 1px, #9ABBFF;
+}
+
+.div_line_info {
+	display: block;
+	margin-bottom: 2px;
+}
+
+
+.left_div {
+	width: 120px; 
+	display: block;
+	background-color:#4cf; /*  */
+	float: left;
+	position:relative;
+	margin-bottom: 2px;
+}
+
+.right_div {
+	width: 160px; 
+	display: block;
+	background-color:#6bc; /*  */
+	float: right;
+	position:relative;
+	margin-bottom: 2px;
+
+}
+
+#div_right_string4 {
+	display: block;
+	float: left;
+	position:relative;
+	font-size:32px;
+	height: 40px;
+	width: 110px;
+}
+
+#div_right_string5 {
+	display: inline-block;
+	margin-left: 30px;
+	margin-top: 10px;
+}
+
+#div_right_string6{
+	display: inline-block;
+}
+
+#div_right_string6::before {
+	content:" — ";
+}
+
+#div_right_string7{
+	height: 40px;
+}
+
+#div_right_string8{
+	height: 40px;
+}
+
+.ajax-respond {
+	display: inline-block;
+	float: right;
+	visibility: hidden;
+	margin-top: -40px;
+}
+
+
+
+/*	Модальное окно показа фотографий, приаттаченных к рейсу	*/
+#modal_form_for_photo {
+	width: 60%; 
+	height: 80%;
+	border-radius: 5px;
+	border: 3px #000 solid;
+	background: #abc;
+	position: fixed; 	/* чтoбы oкнo былo в видимoй зoне в любoм месте */
+	top: 0%; 			/* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
+	left: 50%; 			/* пoлoвинa экрaнa слевa */
+	margin-top: 10px;
+	margin-left: -450px; /* oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo */
+	display: none; 		/* в oбычнoм сoстoянии oкнa не дoлжнo быть */
+	opacity: 0; 		/* пoлнoстью прoзрaчнo для aнимирoвaния */
+	z-index: 5;		 	/* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+	padding: 2px 2px;
+	overflow: auto; 	/* свойство для прокрутки по горизонтали. Автоматом, если содержимое больше блока */
+
+}		
+
+#modal_form_for_photo #modal_close_form_for_photo {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: -15px;
+	right: 5px;
+	cursor: pointer;
+	display: block;
+	border: 3px #555 solid;
+	background: #789;
+	z-index: 10; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
+	border-radius: 5px;
+}
+
+#overlay_for_photo {
+	z-index:3; 				/* пoдлoжкa дoлжнa быть выше слoев элементoв сaйтa, нo ниже слoя мoдaльнoгo oкнa */
+	position:fixed; 		/* всегдa перекрывaет весь сaйт */
+	background-color:#000; 	/* чернaя */
+	opacity:0.3; 			/* нo немнoгo прoзрaчнa */
+	-moz-opacity:0.3; 		/* фикс прозрачности для старых браузеров */
+	filter:alpha(opacity=30);
+	width:100%; 
+	height:100%; 			/* рaзмерoм вo весь экрaн */
+	top:0; 					/* сверху и слевa 0, oбязaтельные свoйствa! */
+	left:0;
+	cursor:pointer;
+	display:none; 			/* в oбычнoм сoстoянии её нет) */
+}
+
+
+/* Содержимое модального окна фотографий */
+#largeImg {
+  border: solid 1px #ccc;
+  width: 400px;
+/*  height: 400px; */
+  padding: 5px;
+}
+
+#thumbs a {
+  border: solid 1px #ccc;
+  width: 100px;
+  height: 100px;
+  padding: 3px;
+  margin: 2px;
+  float: left;
+}
+
+#thumbs a:hover {
+  border-color: #FF9900;
+}
+
+#thumbs li {
+  list-style: none;
+  height: 130px;
+}
+
+#thumbs {
+  margin: 0;
+  padding: 0;
+}
+
+/* Подписи к фотографиям */
+figure.photo_prev {
+  margin: 0;
+  text-align: center;
+}
+
+figure.photo_prev figcaption {  /* стиль описания */
+  padding: 0 1%;
+  font: 80% Georgia,serif;
+}
+
+
+/* -------------- Guards List -----------------	*/
+
+/* Список охранников, выводимый в таблицу менеджера	*/
+.list_users {
+	height:100%;
+}
+
+/* Блок оошибок, возникших при регистрации охранника*/
+#div_from_register_error{
+	color: #FF4447;
+}
+
+/*	Стили для списка охранников	*/
+.number {
+	width: 36px;
+}
+.user_login {
+	width: 200px;
+}
+.full_name {
+	width: 250px;
+}
+
+
+
+/* ----------------- */
+
+
