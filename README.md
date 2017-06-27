@@ -12,7 +12,7 @@
 
 ## Installation
 
-Скопировать файлы на хостинг, импортировать БД, задать в cofig.ini параметры доступа к БД: hostname, username, password, dbName.
+Скопировать файлы на хостинг, импортировать БД, переименовать config-example.ini в cofig.ini и задать в нём параметры доступа к БД: hostname, username, password, dbName.
 
 ## API Reference
 
