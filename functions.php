@@ -22,7 +22,7 @@
 		
 		$stmt = $pdo->query('SELECT `full_name` FROM `users`');	//
 
-		$users_array = array(); //Массив фамилий зарегистрированных охранников
+		$users_array = array();  //Массив фамилий зарегистрированных охранников
 		$k = 0;
 		while ($row = $stmt->fetch()) {
 			if ($row['full_name'] != 'Менеджер') {
