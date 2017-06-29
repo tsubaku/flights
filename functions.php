@@ -32,6 +32,17 @@
 		}
 		$users_array[$k] = 'Не выбран'; //Добавляем в массив охранников невыбранного
 		
+		
+		//Подготовить переменные и выполнить запрос к базе
+		$stmt = $pdo->query('SELECT `client` FROM `clients`');	//
+		$client_array = array();  //Массив фамилий зарегистрированных клиентов
+		$k = 0;
+		while ($row = $stmt->fetch()) {
+			$client_array[$k] = $row['client'];			
+			$k = $k + 1;
+		}
+		$client_array[$k] = 'Не выбран'; //Добавляем в массив невыбранного клиента
+		
 		//unset($users_array[array_search('Менеджер', $users_array)]);
 		
 		if ($table_array != NULL){ //иначе варнинги идут, если рейсов нет
@@ -102,6 +113,19 @@
 							$input_class = '';
 						break;
 	
+						case 'klient':
+							$klient = "<select size='0' id='klient-$id_line' name='klient-$id_line' class='list_users' onchange='$js_change_list'>"; 
+							for ($i=0;$i<count($client_array);$i++){
+								$user_n = str_replace(" ", "_", $client_array[$i]);//Заменяем пробелы на _, иначе браузер не понимает
+								$klient .= "<option value=$user_n";
+								if (($client_array[$i]==$data) or ($data == NULL)){
+									$klient .= " selected='selected'";
+								}
+								$klient .= '>'.$client_array[$i];
+							}
+							$klient .= "</select>";
+						break;
+	
 						case 'fio':
 							$fio = "<select size='0' id='fio-$id_line' name='fio-$id_line' class='list_users' onchange='$js_change_list'>"; 
 							for ($i=0;$i<count($users_array);$i++){
@@ -136,6 +160,8 @@
 					//Если столбец ФИО, то рисуем тег select со списком охранников, иначе просто 
 					if ($column_name == 'fio'){
 						echo "<td ><div class='$container'>$fio</div></td>"; //$data - содержимое ячейки
+					} else if ($column_name == 'klient'){
+						echo "<td ><div class='$container'>$klient</div></td>"; //$data - содержимое ячейки
 					} else {
 						echo "<td ><div class='$container'>$photo<input $readonly type='$type' id='$column_name-$id_line' name='$column_name-$id_line' class='$column_name $status_class' value='$data' onchange='$js_change_cell'></input>$button</div></td>"; //$data - содержимое ячейки
 					}
@@ -153,6 +179,7 @@
 		//$ret = "Example $arg function.\n";
 		//return $ret;
 	}
+	
 	
 //Ресайз фотографий после загрузки на сервер для создания миниатюр
 //http://labdes.ru/resize-images-in-php

@@ -315,6 +315,7 @@ function delete_line (nn_line, table)
 				SummDok.innerHTML = SummSumm;
 				
 				show_list_guards();	 //Обновление списка охранников		
+				show_list_clients();
 			},
 			error: function (error1) {
 				console.log("eror_delete_line");
@@ -559,14 +560,23 @@ function get_photo(id_line) {
  $(document).ready(function() { 	// вся мaгия пoсле зaгрузки стрaницы
 	$('#page1').click( function(){ 	// лoвим клик 
 		//console.log("Показать таблицу рейсов");
-		$('#layerB').css('display', 'none'); 	// делaем layerB невидимым: display: none;
-		$('#layerA').css('display', 'block'); 	// Показываем layerA
+		$('#layerA').css('display', 'block'); 	// Показываем
+		$('#layerB').css('display', 'none'); 	// делaем невидимым		
+		$('#clients').css('display', 'none'); 	// Делaем невидимым
 	});
 	$('#page2').click( function(){ // лoвим клик 
 		//console.log("Показать список охранников");
 		$('#layerA').css('display', 'none'); 	// 
 		$('#layerB').css('display', 'block'); 	// 
+		$('#clients').css('display', 'none'); 	// Делaем невидимым
 		show_list_guards();
+	});
+	$('#page3').click( function(){ // лoвим клик 
+		//console.log("Показать список охранников");
+		$('#layerA').css('display', 'none'); 	// 
+		$('#layerB').css('display', 'none'); 	// 
+		$('#clients').css('display', 'block'); 	// Делaем невидимым
+		show_list_clients()
 	});
 }); 
   
@@ -633,6 +643,66 @@ function register(){
 		})	
 	
 	
+}
+
+
+//Регистрация клиента
+function register_client(){
+	var client 	= document.getElementById("client").value;
+	//var g_password 	= document.getElementById("password").value;
+	//var full_name 	= document.getElementById("full_name").value;
+	//console.log(g_login+"_"+g_password+"_"+full_name);
+	ajax({
+			url:"./register_client.php",
+			type:"POST",
+			statbox:"status",
+			data:
+			{
+				client:client,	
+				//g_password:g_password,	
+				//full_name:full_name,	
+			},
+			success: function (data) {
+				document.getElementById("status").innerHTML=''; 	//удалить значок ожидания
+				console.log(data);
+
+				var res = JSON.parse(data);
+				if (res[1] != ""){									//Если есть ошибки, вывести их на экран
+					document.getElementById("div_from_register_error").innerHTML=res[1];
+				} else {				
+					document.getElementById("client").innerHTML='';	//Очистить поля ввода
+					//document.getElementById("password").innerHTML='';
+					//document.getElementById("full_name").innerHTML='';
+					show_list_clients();
+				}
+			},
+			error: function (error1) {
+				console.log("eror_delete_line");
+				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА! Отработанные часы НЕ записаны</p>';
+			}
+		})		
+}
+
+//Формирование и показ списка охранников
+function show_list_clients(){
+	
+	ajax({
+			url:"./show_list_clients.php",
+			type:"POST",
+			statbox:"status",
+			data:
+			{
+				nn_line:"9",	
+			},
+			success: function (data) {
+				document.getElementById("status").innerHTML=''; //удалить значок ожидания
+				document.getElementById("div_list_clients").innerHTML=data; //отобразить полученные данные
+			},
+			error: function (error1) {
+				console.log("eror_delete_line");
+			}
+		})	
+
 }
 
 

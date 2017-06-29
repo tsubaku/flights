@@ -44,6 +44,11 @@ h3 {
 	display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
 }
 
+#clients{
+	position:absolute;
+	display: none; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */	
+}
+
 .page {
 	display:inline-block;
 	height: 30px;
@@ -663,4 +668,7 @@ figure.photo_prev figcaption {  /* стиль описания */
 
 /* ----------------- */
 
-
+.client {
+	width: 250px;
+	
+}

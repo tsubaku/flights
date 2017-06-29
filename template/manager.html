@@ -24,6 +24,7 @@
 			<h1>Учёт рейсов (интерфейс менеджера)</h1>
 			  <div class="page" id="page1">Рейсы</div>
 			  <div class="page" id="page2">Охранники</div>
+			  <div class="page" id="page3">Клиенты</div>
 		</div>
 
 		<!-- Дальше содержимое первой вкладки   -->
@@ -89,6 +90,21 @@
 			<a href="javascript:void(0)" onclick="register();" id="a_register" class="a_demo_three b_green" title="Зарегистрировать нового охранника">Зарегистрировать</a>
 			
 			<div id="div_list_guards"><!-- Контейнер для списка охранников   -->
+			</div>
+			
+		</div><!-- конец layerB   -->
+		
+		<div id="clients">
+			<div id="div_from_register_error"><!-- Контейнер    -->
+			</div>
+			
+			<form method="POST">
+				Новый клиент<input id="client" name="client" type="text"><br>					
+			</form>	
+			
+			<a href="javascript:void(0)" onclick="register_client();" id="a_register_client" class="a_demo_three b_green" title="Зарегистрировать нового клиента">Зарегистрировать</a>
+			
+			<div id="div_list_clients"><!-- Контейнер для списка клиентов   -->
 			</div>
 			
 		</div><!-- конец layerB   -->

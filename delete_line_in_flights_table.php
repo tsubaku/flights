@@ -31,6 +31,10 @@
 		$stmt = $pdo->prepare('DELETE FROM users WHERE `user_id`= :id_line');
 		$stmt->execute(array('id_line' => $id_line));
 
+	} if ($table == '11') {
+		$stmt = $pdo->prepare('DELETE FROM clients WHERE `id`= :id_line');
+		$stmt->execute(array('id_line' => $id_line));
+	
 	} else {
 		$stmt = $pdo->prepare('DELETE FROM flights WHERE `id` = :id_line');	
 		$stmt->execute(array('id_line' => $id_line));
