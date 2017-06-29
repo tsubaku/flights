@@ -549,7 +549,7 @@ function get_photo(id_line) {
 			},
 			error: function (error1) {
 				console.log("eror_delete_line");
-				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА! Отработанные часы НЕ записаны</p>';
+				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
 		})	
 	
@@ -563,6 +563,7 @@ function get_photo(id_line) {
 		$('#layerA').css('display', 'block'); 	// Показываем
 		$('#layerB').css('display', 'none'); 	// делaем невидимым		
 		$('#clients').css('display', 'none'); 	// Делaем невидимым
+		//$('#page1').css('font-weight', 'bold'); 	// Подсвечиваем выбранную вкладку
 	});
 	$('#page2').click( function(){ // лoвим клик 
 		//console.log("Показать список охранников");

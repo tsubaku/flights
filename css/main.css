@@ -58,7 +58,10 @@ h3 {
 	border-radius: 3px;
 	text-align: center; /* Выравнивание по ширине */
 }
-
+.page:active {
+	color: #00137F;
+	font-weight: bold;
+}
 
 
 /***  Buttons   *********************************/
@@ -178,6 +181,13 @@ h3 {
 	background-image: url(../img/show_flights_table.png);
 }
 
+#a_register::before {
+	background-image: url(../img/add_guard.png);
+}
+
+#a_register_client::before{
+	background-image: url(../img/add_client.png);
+}
 .button_container {
 	margin-left: 10px;
 	float: left;
