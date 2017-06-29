@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html>
+
 	<head>
 		<title>Учёт рейсов</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -78,13 +78,13 @@
 		</div><!-- конец layerA   -->
 
 		<div id="layerB">
-			<div id="div_from_register_error"><!-- Контейнер    -->
+			<div id="div_register_guard_error"><!-- Контейнер    -->
 			</div>
 			
-			<form method="POST">
-				Логин (в смартфоне)<input id="login" name="login" type="text"><br>
-				Пароль <input id="password" name="password" type="password"><br>
-				Фамилия (в таблице)<input id="full_name" name="full_name" type="full_name"><br>						
+			<form method="post">
+				Логин (в смартфоне)<input id="login" name="login" type="text"><br />
+				Пароль <input id="password" name="password" type="password"><br />
+				Фамилия (в таблице)<input id="full_name" name="full_name" type="full_name"><br />						
 			</form>	
 			
 			<a href="javascript:void(0)" onclick="register();" id="a_register" class="a_demo_three b_green" title="Зарегистрировать нового охранника">Зарегистрировать</a>
@@ -95,11 +95,11 @@
 		</div><!-- конец layerB   -->
 		
 		<div id="clients">
-			<div id="div_from_register_error"><!-- Контейнер    -->
+			<div id="div_register_client_error"><!-- Контейнер    -->
 			</div>
 			
-			<form method="POST">
-				Новый клиент<input id="client" name="client" type="text"><br>					
+			<form method="post">
+				Новый клиент<input id="client" name="client" type="text"><br />					
 			</form>	
 			
 			<a href="javascript:void(0)" onclick="register_client();" id="a_register_client" class="a_demo_three b_green" title="Зарегистрировать нового клиента">Зарегистрировать</a>
@@ -107,7 +107,7 @@
 			<div id="div_list_clients"><!-- Контейнер для списка клиентов   -->
 			</div>
 			
-		</div><!-- конец layerB   -->
+		</div><!-- конец clients   -->
 		
 <!-- Блок экспериментов-->
 

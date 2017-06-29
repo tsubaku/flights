@@ -26,6 +26,6 @@
 
 ---
 
-## License
+## Скриншоты
 
----
+![alt text](img/scrinshots/Manager1.png)

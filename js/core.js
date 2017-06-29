@@ -77,8 +77,8 @@ function show_flights_table(user_id, date)
 {		
 	year = GetData('year');
 	month = GetData('month');
-	console.log("период введён1: " + year + " " + month);
-	console.log("user_id1: "+ user_id + " \n");
+	//console.log("период введён1: " + year + " " + month);
+	//console.log("user_id1: "+ user_id + " \n");
 	
 	ajax({
 		url:"./show_flights_table.php",
@@ -92,11 +92,11 @@ function show_flights_table(user_id, date)
 		},
 		success: function (data) {
 			document.getElementById("status").innerHTML=''; //удалить значок ожидания
-			console.log(data);
+			//console.log(data);
 			document.getElementById("div_flights_table").innerHTML=data;
 		},
 		error: function (error1) {
-			console.log("eror_show");
+			console.log("eror_show_flights_table");
 		}
 	})	
 }
@@ -125,7 +125,7 @@ function show_one_flight(date)
 		},
 		success: function (data) {
 			document.getElementById("status").innerHTML=''; //удалить значок ожидания
-			console.log(data);
+			//console.log(data);
 			//document.getElementById("div_show_one_flight").innerHTML=data;
 			var array_data_one_flight = JSON.parse(data);
 			//console.log("# "+array_data_one_flight[0]);
@@ -175,13 +175,13 @@ window.show_one_flight = show_one_flight;
 // Запись изменённой ячейки (отправка её содержимого, column и id php-скрипту)
 function change_cell(cell_value, cell_id)
 {
-	console.log("cell_value: "+cell_value+" cell_id: "+cell_id+" \n");
+	//console.log("cell_value: "+cell_value+" cell_id: "+cell_id+" \n");
 	var position_minus = cell_id.indexOf("-");		//найти позицию символа -
 	var column_in_db = cell_id.substring(0, position_minus);//все символы до -, включительно (получаем название столбца в БД)
 	var id_in_db = cell_id.substring(position_minus+1, cell_id.length);//все символы от - и до конца включительно (получаем id строки в БД)
 
-	console.log("column_in_db: "+column_in_db+" \n");
-	console.log("id_in_db: "+id_in_db+" \n");
+	//console.log("column_in_db: "+column_in_db+" \n");
+	//console.log("id_in_db: "+id_in_db+" \n");
 	
 	ajax({
 			url:"./write_in_table.php",
@@ -196,10 +196,10 @@ function change_cell(cell_value, cell_id)
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; //удалить значок ожидания
-				console.log(data);
+				//console.log(data);
 				var changed_cells = JSON.parse(data);
 				if ((column_in_db == 'prostoj_summa') || (column_in_db == 'stavka_bez_nds') || (column_in_db == 'stavka_s_nds')){
-					console.log("refresh_cell");	
+					//console.log("refresh_cell");	
 					var cell_adress = "schet-" + id_in_db;
 					//console.log("schet= " + changed_cells.schet);		
 					//console.log("cell_adress= " + cell_adress);
@@ -207,43 +207,43 @@ function change_cell(cell_value, cell_id)
 					document.getElementById(cell_adress).value = changed_cells.schet; //Обновляем ячейку "Счёт"
 				}
 				if ((column_in_db == 'prinjatie') || (column_in_db == 'sdacha')){
-					console.log("!refresh cell fakticheskij_srok_dostavki");
+					//console.log("!refresh cell fakticheskij_srok_dostavki");
 					var cell_adress = "fakticheskij_srok_dostavki-" + id_in_db;
-					console.log("fakticheskij_srok_dostavki= " + changed_cells.fakticheskij_srok_dostavki);		
-					console.log("cell_adress= " + cell_adress);
+					//console.log("fakticheskij_srok_dostavki= " + changed_cells.fakticheskij_srok_dostavki);		
+					//console.log("cell_adress= " + cell_adress);
 
 					document.getElementById(cell_adress).value = changed_cells.fakticheskij_srok_dostavki; //Обновляем ячейку "fakticheskij_srok_dostavki"
 				}
 				if ((column_in_db == 'prostoj_chasy') || (column_in_db == 'prostoj_stavka_za_ohrannika')){
 						
 					var cell_adress = "prostoj_summa-" + id_in_db;
-					console.log("prostoj_summa= " + changed_cells.prostoj_summa);
+					//console.log("prostoj_summa= " + changed_cells.prostoj_summa);
 					document.getElementById(cell_adress).value = changed_cells.prostoj_summa; //Обновляем ячейку "prostoj_summa"
 					
 					var cell_adress2 = "schet-" + id_in_db;
-					console.log("schet= " + changed_cells.schet);
+					//console.log("schet= " + changed_cells.schet);
 					document.getElementById(cell_adress2).value = changed_cells.schet; //Обновляем ячейку "Счёт"
 				}
 				
 				if (column_in_db == 'arenda_mashin'){
 						
 					var cell_adress = "oplata_mashin-" + id_in_db;
-					console.log("oplata_mashin= " + changed_cells.oplata_mashin);
+					//console.log("oplata_mashin= " + changed_cells.oplata_mashin);
 					document.getElementById(cell_adress).value = changed_cells.oplata_mashin; //Обновляем ячейку "oplata_mashin"
 					
 					var cell_adress = "itogo-" + id_in_db;
-					console.log("itogo= " + changed_cells.itogo);
+					//console.log("itogo= " + changed_cells.itogo);
 					document.getElementById(cell_adress).value = changed_cells.itogo; //Обновляем ячейку "itogo"
 				}
 				
 				if ((column_in_db == 'zp') || (column_in_db == 'prostoj') || (column_in_db == 'oplata_mashin')){
 						
 					var cell_adress = "itogo-" + id_in_db;
-					console.log("itogo= " + changed_cells.itogo);
+					//console.log("itogo= " + changed_cells.itogo);
 					document.getElementById(cell_adress).value = changed_cells.itogo; //Обновляем ячейку "itogo"
 					
 					var cell_adress = "zp_plus_prostoj-" + id_in_db;
-					console.log("zp_plus_prostoj= " + changed_cells.zp_plus_prostoj);
+					//console.log("zp_plus_prostoj= " + changed_cells.zp_plus_prostoj);
 					document.getElementById(cell_adress).value = changed_cells.zp_plus_prostoj; //Обновляем ячейку "zp_plus_prostoj"
 				}
 			},
@@ -273,7 +273,7 @@ function add_line(user_id)
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; //удалить значок ожидания
-				console.log(data);
+				//console.log(data);
 				var SummDok = document.getElementById('div_flights_table'),
 				SummSumm = data;
 				SummDok.innerHTML = SummSumm
@@ -291,10 +291,10 @@ window.add_line = add_line;
 //При клике по номеру строки, удалить её
 function delete_line (nn_line, table)
 {
-	console.log("nn_line="+nn_line+" \n");
+	//console.log("nn_line="+nn_line+" \n");
 	year = GetData('year');
 	month = GetData('month');	
-	console.log(nn_line+"_"+table+"_"+year+"_"+month);
+	//console.log(nn_line+"_"+table+"_"+year+"_"+month);
 	ajax({
 			url:"./delete_line_in_flights_table.php",
 			type:"POST",
@@ -507,14 +507,14 @@ function get_photo(id_line) {
 				var array_photo_flight = JSON.parse(data);
 				//console.log(array_photo_flight);
 				for (var i = 0; i < array_photo_flight.length; i++) {
-					console.log(array_photo_flight[i]);
+					//console.log(array_photo_flight[i]);
 					document.getElementById("thumbs").innerHTML=document.getElementById("thumbs").innerHTML + array_photo_flight[i];
 					
 					//Меняем большую картинку
 					var patchLargeImg = document.getElementById('photo0');
-					console.log("patchLargeImg.src= " + patchLargeImg.src);
+					//console.log("patchLargeImg.src= " + patchLargeImg.src);
 					var img = document.getElementById("largeImg"); 	// добываем ссылку на элемент (например, по id)
-					console.log("img.src= " + img.src);
+					//console.log("img.src= " + img.src);
 					img.src = patchLargeImg.src; 				// а вот собственно замена
 					
 				}
@@ -612,7 +612,7 @@ function register(){
 	var g_login 	= document.getElementById("login").value;
 	var g_password 	= document.getElementById("password").value;
 	var full_name 	= document.getElementById("full_name").value;
-	console.log(g_login+"_"+g_password+"_"+full_name);
+	//console.log(g_login+"_"+g_password+"_"+full_name);
 	ajax({
 			url:"./register.php",
 			type:"POST",
@@ -625,11 +625,11 @@ function register(){
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; 	//удалить значок ожидания
-				console.log(data);
+				//console.log(data);
 
 				var res = JSON.parse(data);
 				if (res[1] != ""){									//Если есть ошибки, вывести их на экран
-					document.getElementById("div_from_register_error").innerHTML=res[1];
+					document.getElementById("div_register_guard_error").innerHTML=res[1];
 				} else {				
 					document.getElementById("login").innerHTML='';	//Очистить поля ввода
 					document.getElementById("password").innerHTML='';
@@ -665,11 +665,11 @@ function register_client(){
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; 	//удалить значок ожидания
-				console.log(data);
+				//console.log(data);
 
 				var res = JSON.parse(data);
 				if (res[1] != ""){									//Если есть ошибки, вывести их на экран
-					document.getElementById("div_from_register_error").innerHTML=res[1];
+					document.getElementById("div_register_client_error").innerHTML=res[1];
 				} else {				
 					document.getElementById("client").innerHTML='';	//Очистить поля ввода
 					//document.getElementById("password").innerHTML='';
@@ -678,7 +678,7 @@ function register_client(){
 				}
 			},
 			error: function (error1) {
-				console.log("eror_delete_line");
+				console.log("eror_register_client");
 				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА! Отработанные часы НЕ записаны</p>';
 			}
 		})		
@@ -700,7 +700,7 @@ function show_list_clients(){
 				document.getElementById("div_list_clients").innerHTML=data; //отобразить полученные данные
 			},
 			error: function (error1) {
-				console.log("eror_delete_line");
+				console.log("eror_show_list_clients");
 			}
 		})	
 
