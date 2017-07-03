@@ -2,9 +2,9 @@
 	header("Content-type: text/plain; charset=utf-8");
 	header("Cache-Control: no-store, no-cache, must-revalidate");
 	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
-
+/*
 	$value = array ();
 	$i = 0;
 	while(list ($key, $val) = each ($_POST)){
@@ -12,7 +12,7 @@
 		$i = $i + 1;		
 	}
 	$object_operation_name = $value[0]; //
-
+*/
 	require_once('./functions.php');
 	
 	// Скрипт проверки авторизации (если не авторизован, действие всего скрипта не выполняется)
@@ -56,8 +56,7 @@
 			
 			echo "<td>$button</td>"; 
  
-			echo "</tr>";			
-			echo "<br />";
+			echo "</tr>";						
 		}
 	echo "</table>";
 	

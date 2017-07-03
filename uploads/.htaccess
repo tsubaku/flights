@@ -1,0 +1,9 @@
+
+# Запрет отображения листинга каталога
+Options All -Indexes
+
+# Запрет на публичный доступ к файлам каталога
+<FilesMatch ~ "\.(php|htm|html|js|jpg|png|gif)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

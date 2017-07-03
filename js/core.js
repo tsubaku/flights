@@ -289,12 +289,12 @@ window.add_line = add_line;
 
 
 //При клике по номеру строки, удалить её
-function delete_line (nn_line, table)
+function delete_line (id_line, table)
 {
-	//console.log("nn_line="+nn_line+" \n");
+	//console.log("id_line="+id_line+" \n");
 	year = GetData('year');
 	month = GetData('month');	
-	//console.log(nn_line+"_"+table+"_"+year+"_"+month);
+	//console.log(id_line+"_"+table+"_"+year+"_"+month);
 	ajax({
 			url:"./delete_line_in_flights_table.php",
 			type:"POST",
@@ -302,7 +302,7 @@ function delete_line (nn_line, table)
 			statbox:"status",
 			data:
 			{
-				nn_line:nn_line,	
+				id_line:id_line,	
 				table:table,
 				year:year,	
 				month:month,
@@ -313,9 +313,11 @@ function delete_line (nn_line, table)
 				var SummDok = document.getElementById('div_flights_table'),
 				SummSumm = data;
 				SummDok.innerHTML = SummSumm;
-				
-				show_list_guards();	 //Обновление списка охранников		
-				show_list_clients();
+				if (table == '11') {			
+					show_list_clients(); //Обновление списка клиентов	
+				} else if (table == '10') {
+					show_list_guards();	 //Обновление списка охранников		
+				}
 			},
 			error: function (error1) {
 				console.log("eror_delete_line");

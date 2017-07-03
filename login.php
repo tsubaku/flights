@@ -5,18 +5,18 @@
 
 	$pdo = connectToBase();
 
-	if(isset($_POST['submit']))
-	{
+	if(isset($_POST['submit']))	{
 		# Вытаскиваем из БД запись, у которой логин равняеться введенному
 		$stmt = $pdo->prepare('SELECT user_id, user_password FROM users WHERE user_login = :login LIMIT 1');
 		$stmt->execute(array('login' => $_POST['login']));
 		$data = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $data
 	  
 		# Сравниваем пароли
-		if($data[0]['user_password'] === md5(md5($_POST['password'])))
-		{
+		//$enteredPass = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
+		if (password_verify($_POST['password'], $data[0]['user_password'])) {
 			# Генерируем случайное число и шифруем его
-			$hash = md5(generateCode(10));
+			//$hash = md5(generateCode(10));
+			$hash = password_hash(generateCode(10), PASSWORD_DEFAULT);
 			$user_id = $data[0]['user_id'];
 
 			# Записываем в БД новый хеш авторизации и IP
@@ -31,9 +31,8 @@
 			header("Location: index.php"); exit();
 			//echo "ok";
 		}
-		else
-		{
-			print "Вы ввели неправильный логин/пароль";
+		else {
+			print "Вы ввели неправильный логин/пароль $enteredPass";
 		}
 	}
 	

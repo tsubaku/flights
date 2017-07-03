@@ -3,19 +3,17 @@
 	header("Content-type: text/plain; charset=utf-8");
 	header("Cache-Control: no-store, no-cache, must-revalidate");
 	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
 	
-	$value = array (0 => "57");
-	$i = 0;
-	while(list ($key, $val) = each ($_POST)){
-		$value[$i] = $val;
-		$i = $i + 1;		
+	$sentData = array ();
+	foreach ($_POST as $key => $val) {
+		$sentData[$key] = $val;
 	}
-	$id_line = $value[0]; 		//id строки
-	$table   = $value[1]; 		//Название БД, в которой будем удалять строку
-	$year 	 = $value[2]; 		//Год
-	$month 	 = $value[3]; 		//Месяц
+	$id_line = $sentData['id_line']; 		//id строки
+	$table   = $sentData['table']; 		//Название БД, в которой будем удалять строку
+	$year 	 = $sentData['year']; 		//Год
+	$month 	 = $sentData['month']; 		//Месяц
 	//echo "< /br> $id_line, $table, $year, $month < /br>";
 	
 	require_once('./functions.php');

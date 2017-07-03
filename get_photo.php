@@ -1,19 +1,14 @@
 <?php
 // Функция, показывающая при клике по значку "Фото" фотографии, приаттаченные к рейсу
-
-	header("Content-type: text/plain; charset=utf-8");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";	
 	
-	$value = array (0 => "57");
-	$i = 0;
-	while(list ($key, $val) = each ($_POST)){
-		$value[$i] = $val;
-		$i = $i + 1;		
+	$sentData = array ();
+	foreach ($_POST as $key => $val) {
+		$sentData[$key] = $val;
 	}
-	$id_line = $value[0]; 			//id рейса, для которого ищем фото
+	$id_line = $sentData['id_line']; 			//id рейса, для которого ищем фото
 	
 	require_once('./functions.php');
 
@@ -38,4 +33,8 @@
 		$i = $i+1;
 	} 
 	//echo "$photo_name_array";
+	
+	header("Content-type: application/json; charset=utf-8");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false);
 	echo json_encode( $photo_array );

@@ -2,16 +2,14 @@
 	header("Content-type: text/plain; charset=utf-8");
 	header("Cache-Control: no-store, no-cache, must-revalidate");
 	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
-
-	$value = array (0 => "57");
-	$i = 0;
-	while(list ($key, $val) = each ($_POST)){
-		$value[$i] = $val;
-		$i = $i + 1;		
+	
+	$sentData = array ();
+	foreach ($_POST as $key => $val) {
+		$sentData[$key] = $val;
 	}
-	$object_operation_name = $value[0]; //
+	$object_operation_name = $sentData['object_operation_name']; //
 
 	require_once('./functions.php');
 	

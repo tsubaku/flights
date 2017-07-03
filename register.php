@@ -1,10 +1,7 @@
 <?php  
 # Страница регистрации нового пользователя
 
-	header("Content-type: text/plain; charset=utf-8");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
 
 	$value = array (0 => "57");
@@ -49,8 +46,9 @@
 	
 	# Если нет ошибок, то добавляем в БД нового пользователя
 	if(count($err) == 0)	{
-		# Убераем лишние пробелы и делаем двойное шифрование
-		$pass = md5(md5(trim($pass)));	
+		# Убераем лишние пробелы и делаем шифрование
+		//$pass = md5(md5(trim($pass)));	
+		$pass = password_hash(trim($pass), PASSWORD_DEFAULT);
 		
 		$stmt = $pdo->prepare('INSERT INTO users SET user_login = :login, user_password = :pass, full_name = :full_name');	
 		//$stmt = $pdo->prepare('INSERT INTO users (user_login, user_password) VALUES (:login, :pass)');	 //как вариант
@@ -64,6 +62,9 @@
 		}
 	}
 	
+	header("Content-type: application/json; charset=utf-8");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false);
 	echo json_encode($result);
 
 ?>

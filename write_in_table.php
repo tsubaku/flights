@@ -1,19 +1,14 @@
-<?php
-	header("Content-type: text/plain; charset=utf-8");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+<?php	
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
 
-	$date_from_write_time = array();
-	$i = 0;
-	while(list ($key, $val) = each ($_POST)){
-		$date_from_write_time[$i] = $val;
-		$i = $i + 1;			
+	$sentData = array ();
+	foreach ($_POST as $key => $val) {
+		$sentData[$key] = $val;
 	}
-	$cell_value = $date_from_write_time[0]; 	//Содержимое ячейки
-	$id_in_db = $date_from_write_time[1];		//id строки с ячейкой
-	$column_in_db = $date_from_write_time[2];	//название столбца с ячейкой
+	$cell_value = $sentData['cell_value']; 		//Содержимое ячейки
+	$id_in_db = $sentData['id_in_db'];			//id строки с ячейкой
+	$column_in_db = $sentData['column_in_db'];	//название столбца с ячейкой
 	
 	require_once('./functions.php');
 	
@@ -165,7 +160,9 @@
 		break;		
 	}
 	
-	
+	header("Content-type: application/json; charset=utf-8");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false);
 	echo json_encode($res_array);
 	//echo "ok";
 	//echo $res[$y[]];

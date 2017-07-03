@@ -1,21 +1,14 @@
 <?php  
 # Страница регистрации нового пользователя
 
-	header("Content-type: text/plain; charset=utf-8");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	sleep(1); // время ожидания
+	//sleep(1); // время ожидания
 	// echo "Ajax проработал запрос";
 
-	$value = array (0 => "57");
-	$i = 0;
-	while(list ($key, $val) = each ($_POST)){
-		$value[$i] = $val;
-		$i = $i + 1;		
+	$sentData = array ();
+	foreach ($_POST as $key => $val) {
+		$sentData[$key] = $val;
 	}
-	$client 		= $value[0]; //
-	//$pass	 	= $value[1]; //
-	//$full_name 	= $value[2]; //
+	$client 		= $sentData['client']; //
 	
 	$result = array(0 => "0", 1 => ""); //результат регистрации. Статус: 0 - успешно, 1 - есть ошибки
 		
@@ -63,6 +56,9 @@
 		}
 	}
 	
+	header("Content-type: application/json; charset=utf-8");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
+	header("Cache-Control: post-check=0, pre-check=0", false);
 	echo json_encode($result);
 
 ?>

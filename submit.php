@@ -1,6 +1,4 @@
 <?php
-// Автор: Тимур Камаев, http://wp-kama.ru/
-
 // Здесь нужно сделать все проверки передавемых файлов и вывести ошибки если нужно
 	
 	require_once('./functions.php');
@@ -47,5 +45,5 @@ if( isset( $_GET['uploadfiles'] ) ){
 	
     $data = $error ? array('error' => 'Ошибка загрузки файлов.') : array('files' => $files );
 	
-	echo json_encode( $data );
+	echo json_encode($data);
 }

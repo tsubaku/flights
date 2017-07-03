@@ -28,4 +28,21 @@
 
 ## Скриншоты
 
-![alt text](img/scrinshots/Manager1.png)
+Интерфейс менеджера
+![Интерфейс менеджера](img/scrinshots/Manager1.png)
+
+Изменеие даты рейса
+![Изменеие даты рейса](img/scrinshots/Manager2.png)
+
+Список охранников
+![Список охранников](img/scrinshots/Manager3.png)
+
+Список фирм клиентов
+![Список фирм клиентов](img/scrinshots/Manager4.png)
+
+Галерея фотографий с рейса
+![Галерея фотографий с рейса](img/scrinshots/Manager5.png)
+
+Интерфейс охранника (выбор дня, на котором есть рейсы)
+![Интерфейс охранника (выбор дня, на котором есть рейсы)](img/scrinshots/Guard1.png)
+
