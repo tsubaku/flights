@@ -81,7 +81,7 @@ function show_flights_table(user_id, date)
 	//console.log("user_id1: "+ user_id + " \n");
 	
 	ajax({
-		url:"./show_flights_table.php",
+		url:"./core/php/show_flights_table.php",
 		type:"POST",
 		statbox:"status",
 		data:
@@ -110,10 +110,10 @@ function show_one_flight(date)
 	//year = GetData('year');
 	//month = GetData('month');
 	//console.log("период введён1: " + year + " " + month);
-	//console.log("date: "+ date + " \n");
-	//console.log("date: "+ date + " \n");
+	console.log("date: "+ date + " \n");
+	console.log("user_id_current: "+ user_id_current + " \n");
 	ajax({
-		url:"./show_one_flight.php",
+		url:"./core/php/show_one_flight.php",
 		type:"POST",
 		statbox:"status",
 		data:
@@ -125,7 +125,7 @@ function show_one_flight(date)
 		},
 		success: function (data) {
 			document.getElementById("status").innerHTML=''; //удалить значок ожидания
-			//console.log(data);
+			console.log("data = "+data);
 			//document.getElementById("div_show_one_flight").innerHTML=data;
 			var array_data_one_flight = JSON.parse(data);
 			//console.log("# "+array_data_one_flight[0]);
@@ -184,7 +184,7 @@ function change_cell(cell_value, cell_id)
 	//console.log("id_in_db: "+id_in_db+" \n");
 	
 	ajax({
-			url:"./write_in_table.php",
+			url:"./core/php/write_in_table.php",
 			type:"POST",
 			async: true,
 			statbox:"status",
@@ -196,7 +196,7 @@ function change_cell(cell_value, cell_id)
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; //удалить значок ожидания
-				//console.log(data);
+				console.log(data);
 				var changed_cells = JSON.parse(data);
 				if ((column_in_db == 'prostoj_summa') || (column_in_db == 'stavka_bez_nds') || (column_in_db == 'stavka_s_nds')){
 					//console.log("refresh_cell");	
@@ -261,7 +261,7 @@ function add_line(user_id)
 	year = GetData('year');
 	month = GetData('month');
 	ajax({
-			url:"./add_line_in_flights_table.php",
+			url:"./core/php/add_line_in_flights_table.php",
 			type:"POST",
 			//async: true,
 			statbox:"status",
@@ -296,7 +296,7 @@ function delete_line (id_line, table)
 	month = GetData('month');	
 	//console.log(id_line+"_"+table+"_"+year+"_"+month);
 	ajax({
-			url:"./delete_line_in_flights_table.php",
+			url:"./core/php/delete_line_in_flights_table.php",
 			type:"POST",
 			//async: true,
 			statbox:"status",
@@ -450,7 +450,7 @@ function submitFile( jQuery ) {
 
 		// Отправляем запрос
 		$.ajax({
-			url: './submit.php?uploadfiles',
+			url: './core/php/submit.php?uploadfiles',
 			type: 'POST',
 			statbox:"status",
 			data: data1,
@@ -496,7 +496,7 @@ $( document ).ready( submitFile );	//Запускаем ф-ию submitFile по�
 //Функция, показывающая при клике по значку "Фото", фотографии, приаттаченные к рейсу
 function get_photo(id_line) {
 	ajax({
-			url:"./get_photo.php",
+			url:"./core/php/get_photo.php",
 			type:"POST",
 			//async: true,
 			statbox:"status",
@@ -588,7 +588,7 @@ function get_photo(id_line) {
 function show_list_guards(){
 	
 	ajax({
-			url:"./show_list_guards.php",
+			url:"./core/php/show_list_guards.php",
 			type:"POST",
 			statbox:"status",
 			data:
@@ -616,7 +616,7 @@ function register(){
 	var full_name 	= document.getElementById("full_name").value;
 	//console.log(g_login+"_"+g_password+"_"+full_name);
 	ajax({
-			url:"./register.php",
+			url:"./core/php/register.php",
 			type:"POST",
 			statbox:"status",
 			data:
@@ -656,7 +656,7 @@ function register_client(){
 	//var full_name 	= document.getElementById("full_name").value;
 	//console.log(g_login+"_"+g_password+"_"+full_name);
 	ajax({
-			url:"./register_client.php",
+			url:"./core/php/register_client.php",
 			type:"POST",
 			statbox:"status",
 			data:
@@ -690,7 +690,7 @@ function register_client(){
 function show_list_clients(){
 	
 	ajax({
-			url:"./show_list_clients.php",
+			url:"./core/php/show_list_clients.php",
 			type:"POST",
 			statbox:"status",
 			data:

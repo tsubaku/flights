@@ -1,5 +1,5 @@
 <?php  
-	require_once('./functions.php');
+	require_once('./core/php/functions.php');
 	
 	# Проверка авторизации пользователя
 	$level = 'manager';
@@ -10,6 +10,6 @@
 	//$user_id = $userdata['user_id'];
 
 	// загружаем шаблон  
-	require_once('./template/manager.html');
+	require_once('./core/template/manager.html');
 
 ?>

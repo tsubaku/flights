@@ -3,7 +3,7 @@
 	#Переадресация при открытии общего каталога сайта
 	
 	// Скрипт проверки
-	require_once('./functions.php');
+	require_once('./core/php/functions.php');
 	
 	$user_level = protection('what_level');	
 	//echo "$user_level";

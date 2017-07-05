@@ -1,7 +1,7 @@
 <?  
 // Страница авторизации
 
-	require_once('./functions.php');
+	require_once('./core/php/functions.php');
 
 	$pdo = connectToBase();
 
@@ -37,6 +37,6 @@
 	}
 	
 	// загружаем шаблон  
-	require_once('./template/login.html');
+	require_once('./core/template/login.html');
 ?>
 

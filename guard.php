@@ -1,6 +1,6 @@
 <?php  #Страница охранника
 
-	require_once('./functions.php');
+	require_once('./core/php/functions.php');
 	
 	# Проверка авторизации пользователя
 	$level = 'user';
@@ -12,6 +12,6 @@
 	echo '<script language="javascript">var user_id_current = '.$user_id.';</script>';
 	
 	// Загружаем шаблон охранника
-	require_once('./template/guard.html');
+	require_once('./core/template/guard.html');
 
 ?>
