@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Учёт рейсов</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8" />		
+		<meta http-equiv="Cache-control" content="NO-CACHE">		
+		
+		<link rel="stylesheet" href="./css/main.css">	
+		
+		<script type="text/javascript" src="./js/external/jquery/jquery.js"></script>
+		
+		<script type="text/javascript" src="./js/jquery-ui.js"></script> 				<!-- эти три строки добавлеы для совместимости-->
+		<script type="text/javascript" src="./js/jquery-ui-datepicker-ru.js"></script><!-- чтобы manager.php не ругался -->
+		<script type="text/javascript" src="./js/jquery.main.js"></script>			<!-- на datepicker в core.js -->
+		
+		<script type="text/javascript" src="./js/core.js"></script>						<!--  Основная логика сайта  -->
+
+    </head>
+    <body>
+		<div id="menu">
+			<h1>Учёт рейсов (интерфейс менеджера)</h1>
+			  <div class="page" id="page1">Рейсы</div>
+			  <div class="page" id="page2">Охранники</div>
+			  <div class="page" id="page3">Клиенты</div>
+		</div>
+
+		<!-- Дальше содержимое первой вкладки   -->
+		<div id="layerA">
+			
+			<div class="button_container">	
+				<p>Даты выезда:</p>
+			</div>	
+			<div class="button_container">					
+				<select size="0" id="month" name="month">
+					<?php
+						$month=array('Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь');
+						$current_month=date("n");
+						for ($i=1;$i<13;$i++){
+							$ii = $i-1;
+							echo "<option value=$month[$ii]";
+							if ($current_month==$i)echo " selected='selected'";
+							echo ">".$month[$i-1];
+						}
+					?>
+				</select>
+				<br />
+			</div>
+			
+			<div class="button_container">
+				<select size="0" id="year" name="year">
+					<?php
+						$year=array('2016','2017','2018','2019','2020','2021','2022','2023','2024', '2025', '2026', '2027');
+						$current_year=date("Y");
+						for ($y=0;$y<12;$y++){
+							echo "<option value=$year[$y]";
+							if ($year[$y] == $current_year)echo " selected='selected'";
+							echo ">".$year[$y];
+						}
+					?>
+				</select>
+			</div>	
+			
+			<div class="button_container">				
+				<a href="javascript:void(0)" onclick="show_flights_table(<?php print "$user_id" ?>);" id="a_show_flights_table" class="a_demo_three b_green" title="Показать таблицу">Показать таблицу рейсов</a>
+			</div>
+			
+			<!-- Блок таблицы рейсов-->
+			<div id="div_flights_table">
+				<table><caption><strong>Рейсы</strong></caption><tbody><tr><td><strong>№</strong></td><td class=""><strong>Номер рейса</strong></td><td class=""><strong>Дата выезда</strong></td><td class=""><strong>Время</strong></td><td class=""><strong>Клиент</strong></td><td class=""><strong>Подклиент</strong></td><td class=""><strong>Номер машины</strong></td><td class=""><strong>Принятие под охрану</strong></td><td class=""><strong>Сдача с охраны</strong></td><td class=""><strong>Состав ОХР</strong></td><td class=""><strong>ФИО</strong></td><td class=""><strong>Выдано</strong></td><td class=""><strong>Машина</strong></td><td class=""><strong>Срок доставки</strong></td><td class=""><strong>Принятие</strong></td><td class=""><strong>Сдача</strong></td><td class=""><strong>Фактич. срок доставки</strong></td><td class=""><strong>Простой часы</strong></td><td class=""><strong>Простой, ставка за охранника</strong></td><td class=""><strong>Простой сумма</strong></td><td class=""><strong>Ставка без НДС</strong></td><td class=""><strong>Ставка с НДС</strong></td><td class=""><strong>Счёт</strong></td><td class=""><strong>ЗП</strong></td><td class=""><strong>Простой</strong></td><td class=""><strong>Аренда машины</strong></td><td class=""><strong>Оплата машины</strong></td><td class=""><strong>ИТОГО</strong></td><td class=""><strong>ЗП+Простой</strong></td><td class=""><strong>Статус</strong></td><td class=""><strong></strong></td></tr></tbody></table>
+			</div>
+						
+			<div>			
+				<a href="javascript:void(0)" onclick="add_line(<?php print "$user_id" ?>);" id="a_add_line" class="a_demo_three b_green" title="Добавить строку">Добавить строку</a>
+			</div>
+		</div><!-- конец layerA   -->
+
+		<div id="layerB">
+			<div id="div_register_guard_error"><!-- Контейнер    -->
+			</div>
+			
+			<form method="post">
+				Логин (в смартфоне)<input id="login" name="login" type="text"><br />
+				Пароль <input id="password" name="password" type="password"><br />
+				Фамилия (в таблице)<input id="full_name" name="full_name" type="full_name"><br />						
+			</form>	
+			
+			<a href="javascript:void(0)" onclick="register();" id="a_register" class="a_demo_three b_green" title="Зарегистрировать нового охранника">Зарегистрировать</a>
+			
+			<div id="div_list_guards"><!-- Контейнер для списка охранников   -->
+			</div>
+			
+		</div><!-- конец layerB   -->
+		
+		<div id="clients">
+			<div id="div_register_client_error"><!-- Контейнер    -->
+			</div>
+			
+			<form method="post">
+				Новый клиент<input id="client" name="client" type="text"><br />					
+			</form>	
+			
+			<a href="javascript:void(0)" onclick="register_client();" id="a_register_client" class="a_demo_three b_green" title="Зарегистрировать нового клиента">Зарегистрировать</a>
+			
+			<div id="div_list_clients"><!-- Контейнер для списка клиентов   -->
+			</div>
+			
+		</div><!-- конец clients   -->
+		
+<!-- Блок экспериментов-->
+
+
+
+
+
+
+
+<!-- /Блок экспериментов-->
+
+		
+		
+<!--  Блок модального окна показа миниатюр -->			
+		<div id="modal_form_for_photo"><!-- Сaмo oкнo --> 
+			<span id="modal_close_form_for_photo">X</span> <!-- Кнoпкa зaкрыть --> 
+			
+			<div id="div_large_photo" class="button_container"><img id="largeImg" src="" alt="Large image">
+			</div>
+		
+			<div id="div_photo" class="button_container">
+				 <ul id="thumbs">
+				 </ul>
+			</div>
+		</div>
+		
+		<div id="overlay_for_photo">
+		</div><!-- Пoдлoжкa -->
+
+		<div id="status">					
+		</div>
+<!--  /Блок модального окна -->	
+				
+	</body>		
+</html>
+
+
+
+				

@@ -1,2 +1,2 @@
-uploads/*.jpg
-config.ini
+core/uploads/*.jpg
+core/php/config.ini
