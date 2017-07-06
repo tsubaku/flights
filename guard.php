@@ -5,7 +5,6 @@
 	# Проверка авторизации пользователя
 	$level = 'user';
 	protection($level);
-	//$user_level = protection('what_level');	
 
 	//print "Привет, ".$userdata['user_login'].". Всё работает!";
 	$user_id = protection($level);
