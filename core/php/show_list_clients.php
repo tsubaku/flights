@@ -13,9 +13,7 @@ protection($level);
 
 $table_users = '11'; //клиенты             !!! Костыль !!!
 
-# Cоздать соединение
-$pdo = connectToBase();
-
+$pdo         = connectToBase(); // Cоздать соединение
 $stmt        = $pdo->query('SELECT `id`, `client` FROM `clients`'); //Подготовить и выполнить запрос к базе    
 $table_array = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $table_array    
 
@@ -27,14 +25,8 @@ $ru_rows_array = array(
     "Название",
     "del"
 );
-/*
-$i             = 0;
-while ($i <= count($ru_rows_array) - 1) {
-    echo "<td><strong>" . $ru_rows_array[$i] . "</strong></td>"; //Рисуем шапку
-    $i = $i + 1;
-}
-echo "</tr>";
-*/
+
+
 foreach ($ru_rows_array as $value) {
     echo "<td><strong>" . $value . "</strong></td>"; //Рисуем шапку
 }
@@ -42,18 +34,16 @@ foreach ($ru_rows_array as $value) {
 $i = 1;
 foreach ($table_array as $item) {
     echo "<tr>";
-    echo "<td><input type='text' id='number_client-$i' class='number' value='" . $i . "' disabled='disabled'> </input></td>"; //Вывод № строки
+    echo "<td><input type='text' id='number_client-$i' class='number' value='$i' disabled='disabled'> </input></td>"; //Вывод № строки
     $i = $i + 1;
     
-    $id     = $item['id']; //id клиента
-    $client = $item['client']; //Название клиента
+    $id     = $item['id'];      //id клиента
+    $client = $item['client'];  //Название клиента
     
-    $container = "container_default";
-    $readonly  = "readonly";
-    $type      = "text";
-    $button    = "<div class='$container'><a href='#' class='a_button_delete' onclick='delete_line($id, $table_users);'></a></div>";
-    
-    echo "<td><div class='$container'><input $readonly type='$type' id='client-$id' name='client-$id' class='client' value='$client' ></input></div></td>";
+    $button    = "<div class='container_default'><button type='button' class='a_button_delete' onclick='delete_line($id, $table_users);'></button></div>";
+ 
+    //Вставляем в таблицу все данные, кроме id
+    echo "<td><div class='container_default'><input readonly type='text' id='client-$id' name='client-$id' class='client' value='$client' ></input></div></td>";
     
     echo "<td>$button</td>";
     

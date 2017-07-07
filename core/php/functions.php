@@ -134,12 +134,12 @@ function showTable($year, $month, $user_id)
                         ));
                         $photo_name_array = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $photo_name_array
                         if ($photo_name_array) {
-                            $photo = "<a href='#' class='a_button_photo' onclick='get_photo($id_line)'></a>";
+                            $photo = "<button type='button' class='a_button_photo' onclick='get_photo($id_line)'></button>";
                         } else {
-                            $photo = "<a href='#' class='a_button_no_photo' onclick='get_photo($id_line)'></a>";
+                            $photo = "<button type='button' class='a_button_no_photo' onclick='get_photo($id_line)'></button>";
                         }
                         $container = "container_id";
-                        $button    = "<a href='#' class='a_button_delete' onclick='delete_line($data, $table);'></a>";
+                        $button    = "<button type='button' class='a_button_delete' onclick='delete_line($data, $table);'></button>";
                         break;
                     
                     case 'data_vyezda':
@@ -163,26 +163,26 @@ function showTable($year, $month, $user_id)
                     
                     case 'klient':
                         $klient = "<select size='0' id='klient-$id_line' name='klient-$id_line' class='list_users' onchange='$js_change_list'>";
-                        for ($i = 0; $i < count($client_array); $i++) {
-                            $user_n = str_replace(" ", "_", $client_array[$i]); //Заменяем пробелы на _, иначе браузер не понимает
+                        foreach ($client_array as $value) {
+                            $user_n = str_replace(" ", "_", $value); //Заменяем пробелы на _, иначе браузер не понимает
                             $klient .= "<option value=$user_n";
-                            if (($client_array[$i] == $data) or ($data == NULL)) {
+                            if (($value == $data) or ($data == NULL)) {
                                 $klient .= " selected='selected'";
                             }
-                            $klient .= '>' . $client_array[$i];
+                            $klient .= '>' . $value;
                         }
                         $klient .= "</select>";
                         break;
                     
                     case 'fio':
                         $fio = "<select size='0' id='fio-$id_line' name='fio-$id_line' class='list_users' onchange='$js_change_list'>";
-                        for ($i = 0; $i < count($users_array); $i++) {
-                            $user_n = str_replace(" ", "_", $users_array[$i]); //Заменяем пробелы на _, иначе браузер не понимает
+                        foreach ($users_array as $value) {
+                            $user_n = str_replace(" ", "_", $value); //Заменяем пробелы на _, иначе браузер не понимает
                             $fio .= "<option value=$user_n";
-                            if (($users_array[$i] == $data) or ($data == NULL)) {
+                            if (($value == $data) or ($data == NULL)) {
                                 $fio .= " selected='selected'";
                             }
-                            $fio .= '>' . $users_array[$i];
+                            $fio .= '>' . $value;
                         }
                         $fio .= "</select>";
                         break;
@@ -222,18 +222,17 @@ function showTable($year, $month, $user_id)
         showTable($year, $month_name, $user_id); //Заново запускаем функцию и выводим эту строку на экран
     }
     unset($row_content); // разорвать ссылку на последний элемент
-    
-    
-    //$ret = "Example $arg function.\n";
-    //return $ret;
+
 }
 
 
 //Ресайз фотографий после загрузки на сервер для создания миниатюр
-//http://labdes.ru/resize-images-in-php
 function createThumbnail($path, $save, $width, $height)
 {
     $info = getimagesize($path); //получаем размеры картинки и ее тип
+    if ($info == false) {   //проверка существования данных о возвращаемых getimagesize данных фото.
+        return false;
+    }
     $size = array(
         $info[0],
         $info[1]
@@ -338,7 +337,7 @@ function connectToBase()
 # Функция проверки авторизации
 function protection($level)
 {
-    if (is_null($_COOKIE['id']) or is_null($_COOKIE['hash'])) {
+    if (empty($_COOKIE['id']) or empty($_COOKIE['hash'])) {
         # Переадресовываем браузер на страницу ошибок авторизации (нет хеша или куков)
         //header("Location: status_codes.php?result=401"); exit();
         header("Location: login.php");
@@ -358,7 +357,8 @@ function protection($level)
     
     if (($userdata['user_hash'] !== $_COOKIE['hash']) or ($userdata['user_id'] !== $_COOKIE['id'])) {
         # Переадресовываем браузер на страницу ошибок авторизации (не совпадает хеш или куки)
-        header("Location: status_codes.php?result=402");
+        //header("Location: status_codes.php?result=402");
+         header("Location: login.php");
         exit();
     }
     $user_level = $userdata['user_id']; //Подтверждённый юзерлевел 
@@ -366,7 +366,8 @@ function protection($level)
     if ($level == 'manager') { #Доп.проверка для менеджерского аккаунта
         if ($userdata['user_id'] !== '9') {
             # Переадресовываем браузер на страницу ошибок авторизации (не совпадает хеш или куки)
-            header("Location: status_codes.php?result=403");
+            //header("Location: status_codes.php?result=403");
+             header("Location: login.php");
             exit();
         }
         $user_level = $userdata['user_id']; //Подтверждённый юзерлевел 

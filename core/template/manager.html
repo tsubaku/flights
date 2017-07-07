@@ -61,7 +61,9 @@
 			</div>	
 			
 			<div class="button_container">				
-				<a href="javascript:void(0)" onclick="show_flights_table(<?php print "$user_id" ?>);" id="a_show_flights_table" class="a_demo_three b_green" title="Показать таблицу">Показать таблицу рейсов</a>
+                <button type="button" onclick="show_flights_table(<?php print "$user_id" ?>);" id="a_show_flights_table" class="a_demo_three b_green">
+                    Показать таблицу рейсов
+                </button>
 			</div>
 			
 			<!-- Блок таблицы рейсов-->
@@ -70,37 +72,45 @@
 			</div>
 						
 			<div>			
-				<a href="javascript:void(0)" onclick="add_line(<?php print "$user_id" ?>);" id="a_add_line" class="a_demo_three b_green" title="Добавить строку">Добавить строку</a>
+                <button type="button" onclick="add_line(<?php print "$user_id" ?>);" id="a_add_line" class="a_demo_three b_green">
+                   Добавить строку
+                </button>
 			</div>
 		</div><!-- конец layerA   -->
 
 		<div id="layerB">
-			<div id="div_register_guard_error"><!-- Контейнер    -->
+			<div id="div_register_guard_error"><!-- Контейнер для ошибок регистрации-->
 			</div>
 			
-			<form method="post">
+			<div>
 				Логин (в смартфоне)<input id="login" name="login" type="text"><br />
 				Пароль <input id="password" name="password" type="password"><br />
 				Фамилия (в таблице)<input id="full_name" name="full_name" type="full_name"><br />						
-			</form>	
-			
-			<a href="javascript:void(0)" onclick="register();" id="a_register" class="a_demo_three b_green" title="Зарегистрировать нового охранника">Зарегистрировать</a>
-			
+						
+                <button type="button" onclick="register();" id="a_register" class="a_demo_three b_green">
+                    Зарегистрировать
+                </button>
+			</div>	
+            
 			<div id="div_list_guards"><!-- Контейнер для списка охранников   -->
-			</div>
+            </div>
+            
+			
 			
 		</div><!-- конец layerB   -->
 		
 		<div id="clients">
-			<div id="div_register_client_error"><!-- Контейнер    -->
+			<div id="div_register_client_error"><!-- Контейнер для ошибок регистрации   -->
 			</div>
 			
-			<form method="post">
-				Новый клиент<input id="client" name="client" type="text"><br />					
-			</form>	
-			
-			<a href="javascript:void(0)" onclick="register_client();" id="a_register_client" class="a_demo_three b_green" title="Зарегистрировать нового клиента">Зарегистрировать</a>
-			
+			<div>
+				Новый клиент
+                <input id="client" name="client" type="text"><br />					
+                <button type="button" onclick="register_client();" id="a_register_client" class="a_demo_three b_green">
+                    Зарегистрировать
+                </button>
+			</div>	
+            
 			<div id="div_list_clients"><!-- Контейнер для списка клиентов   -->
 			</div>
 			

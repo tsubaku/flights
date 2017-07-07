@@ -5,8 +5,6 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 
 // echo "Ajax проработал запрос";
 
-
-
 require_once('./functions.php');
 
 // Скрипт проверки авторизации (если не авторизован, действие всего скрипта не выполняется)
@@ -15,9 +13,7 @@ protection($level);
 
 $table_users = '10'; //охранники             !!! Костыль !!!
 
-# Cоздать соединение
-$pdo = connectToBase();
-
+$pdo = connectToBase(); // Cоздать соединение
 //Подготовить переменные и выполнить запрос к базе
 $stmt        = $pdo->prepare('SELECT `user_id`, `user_login`, `full_name` FROM `users`');
 $data_from   = "01";
@@ -59,35 +55,23 @@ if ($users_array != NULL) { //иначе варнинги идут, если р�
         echo "<td><strong>" . $value . "</strong></td>"; //Рисуем шапку
     }
     
+    $i = 1;
     foreach ($table_array as $key_id => $row_content) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
         echo "<tr>";
-        echo "<td><input type='text' id='number_guard$key_id' class='number' value='" . $key_id . "' disabled='disabled'> </input></td>"; //Вывод № строки
-        $id_line   = $row_content['user_id']; //$id_line - id строки в БД
-        $id_status = $row_content['fakticheskij_srok_dostavki']; //$id_status - status строки в БД
+        echo "<td><input type='text' id='number_guard-$i' class='number' value='$i' disabled='disabled'> </input></td>"; //Вывод № строки
+        $i = $i + 1;
         
-        foreach ($row_content as $column_name => $data) {
-            //Определяем переменные для каждой ячейки строки
-            $container    = "container_default";
-            $status_class = "";
-            $readonly     = "";
-            $type         = "text";
-            $fio          = "";
-            switch ($column_name) {
-                case 'data_vyezda':
-                    $type = "date"; //Ставим в ячейку дату;
-                    break;
+        $user_id     = $row_content['user_id'];        //id охранника
+        $user_login  = $row_content['user_login'];     //login охранника
+        $full_name   = $row_content['full_name'];      //Фамилия охранника
+
+        $button      = "<div class='container_default'><button type='button' class='a_button_delete' onclick='delete_line($user_id, $table_users);'></button></div>";
+
                 
-                default:
-                    break;
-            }
-            
-            //Если столбец ФИО, то рисуем тег select со списком охранников
-            if ($column_name != 'user_id') {
-                echo "<td ><div class='$container'><input $readonly type='$type' id='$column_name-$id_line' name='$column_name-$id_line' class='$column_name $status_class' value='$data' ></input></div></td>"; //$data - содержимое ячейки
-            } else {
-                $button = "<div class='$container'><a href='#' class='a_button_delete' onclick='delete_line($data, $table_users);'></a></div>";
-            }
-        }
+        //Вставляем в таблицу все данные, кроме id
+        echo "<td><div class='container_default'><input readonly type='text' id='user_login-$user_id' name='user_login-$user_id' class='' value='$user_login' ></input></div></td>"; 
+   
+        echo "<td><div class='container_default'><input readonly type='text' id='full_name-$user_id' name='full_name-$user_id' class='' value='$full_name'></input></div></td>";
         echo "<td>$button</td>";
         echo "</tr>";
     }
