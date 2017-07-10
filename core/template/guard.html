@@ -27,43 +27,8 @@
 
 			<div id="calendar">
 			</div>
+            <p>Охранник: <?php print($full_name);?></p>
 
-			<?php
-				# Cоздать соединение
-				$pdo = connectToBase();
-				
-				//Подготовить переменные и выполнить запрос к базе
-				$stmt = $pdo->prepare('SELECT `full_name` FROM `users` WHERE `user_id` = :id_in_db');
-				$stmt->execute(array('id_in_db' => $user_id));
-				
-				while ($row = $stmt->fetch()) {
-					$user_full_name = $row['full_name'];
-				}
-				echo "Охранник: ".$user_full_name . "\n";
-				
-				//Подготовить переменные и выполнить запрос к базе	
-				$stmt = $pdo->prepare("SELECT `data_vyezda` FROM `flights` WHERE `fio` = :user_full_name");
-				$stmt->execute(array('user_full_name' => $user_full_name));
-				//Обработать запрос, переведя ВСЕ данные в массив $table_array
-				$table_array = $stmt->fetchAll();
-				
-				$array_date_of_departure = Array();
-				$i = 0;
-				foreach ($table_array as $date_of_departure) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
-					//echo $date_of_departure['data_vyezda'] . "\n";
-					$array_date_of_departure[$i] = $date_of_departure['data_vyezda'];
-					$i = $i+1;
-				}
-				//print_r ($array_date_of_departure);
-				//echo "$array_date_of_departure[1]". "\n";
-
-				//Отправляем масив дат выездов js-скрипту
-				$js_array = json_encode($array_date_of_departure);
-				echo '<script language="javascript">var array_date_of_departure = '.$js_array.';</script>';
-				
-			?>
-
-			
 			<!--  Блок модального окна -->			
 			<div id="modal_form"><!-- Сaмo oкнo --> 
 				<span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 

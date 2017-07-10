@@ -17,10 +17,9 @@ foreach ($_POST as $key => $val) {
 
 $year    = $sentData['year']; //Год
 $month   = $sentData['month']; //Месяц
-$user_id = $sentData['user_id']; //ФИО человека, по которому будет создана выборка из БД
 
 //Показать таблицу
-showTable($year, $month, $user_id);
+showTable($year, $month);
 
 
 

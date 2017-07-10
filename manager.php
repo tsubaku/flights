@@ -2,14 +2,16 @@
 	require_once('./core/php/functions.php');
 	
 	# Проверка авторизации пользователя
-	$level = 'manager';
+	$level      = 'manager';
 	protection($level);
-	$user_id = protection($level);
 	
-	//print "Привет, ".$userdata['user_login'].". Всё работает!";
-	//$user_id = $userdata['user_id'];
+    $user_info  = protection($level);
+	
+    $user_id    = $user_info['user_id'];
+    $user_level = $user_info['user_level'];
+    $full_name  = $user_info['full_name'];
 
-	// загружаем шаблон  
+	# Загружаем шаблон  
 	require_once('./core/template/manager.html');
 
 ?>

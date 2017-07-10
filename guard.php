@@ -6,11 +6,33 @@
 	$level = 'user';
 	protection($level);
 
-	//print "Привет, ".$userdata['user_login'].". Всё работает!";
-	$user_id = protection($level);
-	echo '<script language="javascript">var user_id_current = '.$user_id.';</script>';
+	$user_info  = protection($level);
+    $user_id    = $user_info['user_id'];
+    $user_level = $user_info['user_level'];
+    $full_name  = $user_info['full_name'];
 	
-	// Загружаем шаблон охранника
+    #Вытаскиваем из базы даты выездов нужного охранника    
+    $pdo = connectToBase(); //Cоздать соединение
+    $stmt = $pdo->prepare("SELECT `data_vyezda` FROM `flights` WHERE `fio` = :full_name");
+    $stmt->execute(array('full_name' => $full_name));
+    $table_array = $stmt->fetchAll();       //Обработать запрос, переведя ВСЕ данные в массив $table_array
+
+    $array_date_of_departure = Array();
+    $i = 0;
+    foreach ($table_array as $date_of_departure) { 
+        $array_date_of_departure[$i] = $date_of_departure['data_vyezda'];
+        $i = $i+1;
+    }
+
+    $js_array = json_encode($array_date_of_departure);//масив дат выездов
+    
+    #Отправляем js-скрипту:
+    echo '<script language="javascript">var user_id_current = '.$user_id.';</script>';          //id
+    echo '<script language="javascript">var array_date_of_departure = '.$js_array.';</script>'; //масив дат выездов
+				
+			
+	
+	# Загружаем шаблон охранника
 	require_once('./core/template/guard.html');
 
 ?>

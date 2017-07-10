@@ -5,10 +5,9 @@
 	// Скрипт проверки
 	require_once('./core/php/functions.php');
 	
-	$user_level = protection('what_level');	
-	//echo "$user_level";
+	$user_info = protection('what_level');	
 	
-	if ($user_level == 9) {
+	if ($user_info['user_level'] == 'manager') {
 		header("Location: manager.php"); exit(); //Менеджеру менеджерово
 	}
 	else {

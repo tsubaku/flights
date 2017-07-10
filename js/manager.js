@@ -4,7 +4,7 @@
 
 
 //Показать таблицу рейсов для user_id (Если это манагер - показать всё) //Используется только для показа таблицы менеджеру
-function show_flights_table(user_id, date)
+function show_flights_table()
 {		
 	year = GetData('year');
 	month = GetData('month');
@@ -19,7 +19,7 @@ function show_flights_table(user_id, date)
 		{
 			year:year,	
 			month:month,
-			user_id:user_id,
+			//user_id:user_id,
 		},
 		success: function (data) {
 			document.getElementById("status").innerHTML=''; //удалить значок ожидания
@@ -38,7 +38,7 @@ window.show_flights_table = show_flights_table;
 
 
 //Добавление строки в таблицу рейсов
-function add_line(user_id)
+function add_line()
 {
 	year = GetData('year');
 	month = GetData('month');
@@ -51,18 +51,20 @@ function add_line(user_id)
 			{
 				year:year,	
 				month:month,
-				user_id:user_id,
+				//user_id:user_id,
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; //удалить значок ожидания
 				//console.log(data);
 				var SummDok = document.getElementById('div_flights_table'),
 				SummSumm = data;
-				SummDok.innerHTML = SummSumm
+				SummDok.innerHTML = SummSumm;
+                
+                //show_flights_table();
 			},
 			error: function (error1) {
 				console.log("eror_add_line"+" \n");
-				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА! Отработанные часы НЕ записаны</p>';
+				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
 		})	
 		
@@ -76,7 +78,7 @@ function delete_line (id_line, table)
 	//console.log("id_line="+id_line+" \n");
 	year = GetData('year');
 	month = GetData('month');	
-	//console.log(id_line+"_"+table+"_"+year+"_"+month);
+	console.log(id_line+"_"+table+"_"+year+"_"+month);
 	ajax({
 			url:"./core/php/delete_line_in_flights_table.php",
 			type:"POST",
@@ -103,9 +105,9 @@ function delete_line (id_line, table)
 			},
 			error: function (error1) {
 				console.log("eror_delete_line");
-				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА! Отработанные часы НЕ записаны</p>';
+				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
-		})	 
+		})	  
 }
 window.delete_line = delete_line;
 
@@ -212,8 +214,7 @@ function get_photo(id_line) {
   
 
 //Формирование и показ списка охранников
-function show_list_guards(){
-	
+function show_list_guards(){	
 	ajax({
 			url:"./core/php/show_list_guards.php",
 			type:"POST",
@@ -232,7 +233,6 @@ function show_list_guards(){
 				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
 		})	
-
 }
   
   

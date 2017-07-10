@@ -8,9 +8,10 @@ foreach ($_POST as $key => $val) {
     $sentData[$key] = $val;
 }
 
-$login     = $sentData['g_login']; //Логин охранника через смартфон
-$pass      = $sentData['g_password']; //Пароль охранника
-$full_name = $sentData['full_name']; //Фамилия охранника для таблицы
+$login      = $sentData['g_login'];     //Логин охранника через смартфон
+$pass       = $sentData['g_password'];  //Пароль охранника
+$full_name  = $sentData['full_name'];   //Фамилия охранника для таблицы
+$user_level = 'guard';                  //Уровень доступа юзера
 
 $result = array(
     0 => "0",
@@ -53,12 +54,13 @@ if (count($err) == 0) {
     //$pass = md5(md5(trim($pass)));    
     $pass = password_hash(trim($pass), PASSWORD_DEFAULT);
     
-    $stmt = $pdo->prepare('INSERT INTO users SET user_login = :login, user_password = :pass, full_name = :full_name');
+    $stmt = $pdo->prepare('INSERT INTO users SET user_login = :login, user_password = :pass, full_name = :full_name, user_level = :user_level');
     //$stmt = $pdo->prepare('INSERT INTO users (user_login, user_password) VALUES (:login, :pass)');     //как вариант
     $stmt->execute(array(
         'login' => $login,
         'pass' => $pass,
-        'full_name' => $full_name
+        'full_name' => $full_name,
+        'user_level' => $user_level
     ));
 } else {
     $result[1] .= "<b>При регистрации произошли следующие ошибки:</b><br>";

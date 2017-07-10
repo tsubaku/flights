@@ -2,10 +2,11 @@
 //Файл с набором функций для программы.
 
 //Показать таблицу рейсов за введённый период
-function showTable($year, $month, $user_id)
+function showTable($year, $month)
 {
-    $table      = '20'; //рейсы             !!! Костыль !!!
-    //Перевод названия месяца в его номер по порядку
+    $table = '20'; //рейсы             !!! Костыль !!!
+    
+    #Перевод названия месяца в его номер по порядку
     $mons       = array(
         "Январь" => 01,
         "Февраль" => 02,
@@ -22,9 +23,8 @@ function showTable($year, $month, $user_id)
     );
     $month_name = $mons[$month];
     
+    #Вытаскаваем из базы данные всех рейсов за указанный период.
     $pdo = connectToBase();
-    
-    //Подготовить переменные и выполнить запрос к базе
     $stmt        = $pdo->prepare('SELECT * FROM `flights` WHERE (data_vyezda BETWEEN :data_from AND :data_before) OR `data_vyezda` IS NULL GROUP BY `id`');
     $data_from   = "$year" . "-" . "$month_name" . "-01";
     $data_before = "$year" . "-" . "$month_name" . "-31";
@@ -48,7 +48,6 @@ function showTable($year, $month, $user_id)
     }
     $users_array[$k] = 'Не выбран'; //Добавляем в массив охранников невыбранного
     
-    
     //Подготовить переменные и выполнить запрос к базе
     $stmt         = $pdo->query('SELECT `client` FROM `clients`'); //
     $client_array = array(); //Массив фамилий зарегистрированных клиентов
@@ -58,8 +57,6 @@ function showTable($year, $month, $user_id)
         $k                = $k + 1;
     }
     $client_array[$k] = 'Не выбран'; //Добавляем в массив невыбранного клиента
-    
-    //unset($users_array[array_search('Менеджер', $users_array)]);
     
     if ($table_array != NULL) { //иначе варнинги идут, если рейсов нет
         $column_name_array = array_keys($table_array[0]); //$column_name_array - массив имён столбцов таблицы
@@ -219,7 +216,7 @@ function showTable($year, $month, $user_id)
         echo "</table>";
     } else { //Если в таблице нет ни одного рейса за этот месяц и нет рейсов без даты, то:
         $stmt = $pdo->query('INSERT INTO flights () VALUES()'); //Добавляем пустую строку
-        showTable($year, $month_name, $user_id); //Заново запускаем функцию и выводим эту строку на экран
+        showTable($year, $month_name); //Заново запускаем функцию и выводим эту строку на экран
     }
     unset($row_content); // разорвать ссылку на последний элемент
 
@@ -280,15 +277,14 @@ function createThumbnail($path, $save, $width, $height)
     $new_size[1] = max($new_size[1], 1);
     
     imagecopyresampled($thumb, $src, 0, 0, $src_pos[0], $src_pos[1], $new_size[0], $new_size[1], $size[0], $size[1]);
-    //Копирование и изменение размера изображения с ресемплированием
-    
+    //Копирование и изменение размера изображения с ресемплированием   
     if ($save === false) {
         return imagepng($thumb); //Выводит JPEG/PNG/GIF изображение
     } else {
         return imagepng($thumb, $save); //Сохраняет JPEG/PNG/GIF изображение
-    }
-    
+    }  
 }
+
 
 # Функция для генерации случайной строки (для авторизации, испоьзуется в login.php)
 function generateCode($length = 6)
@@ -361,8 +357,7 @@ function protection($level)
          header("Location: login.php");
         exit();
     }
-    $user_level = $userdata['user_id']; //Подтверждённый юзерлевел 
-    
+     
     if ($level == 'manager') { #Доп.проверка для менеджерского аккаунта
         if ($userdata['user_id'] !== '9') {
             # Переадресовываем браузер на страницу ошибок авторизации (не совпадает хеш или куки)
@@ -370,14 +365,15 @@ function protection($level)
              header("Location: login.php");
             exit();
         }
-        $user_level = $userdata['user_id']; //Подтверждённый юзерлевел 
     }
-    
-    if ($level == 'what_level') {
-        $user_level = $userdata['user_id']; //Подтверждённый юзерлевел 
-    }
-    
-    return $user_level;
+    $user_info  = array(
+            user_id    => $userdata['user_id'],   //id юзера
+            full_name  => $userdata['full_name'], //Фамилия юзера
+            user_level => $userdata['user_level'] //Подтверждённый юзерлевел
+        );
+        
+    //$user_level = $userdata['user_id']; //Подтверждённый юзерлевел 
+    return $user_info;
 }
 
 ?>

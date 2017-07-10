@@ -26,26 +26,27 @@ $pdo = connectToBase();
 
 //Подготовить переменные и выполнить запрос к базе
 if ($table == '10') {
-    $stmt = $pdo->prepare('DELETE FROM users WHERE `user_id`= :id_line');
+    $stmt = $pdo->prepare('DELETE FROM `users` WHERE `user_id`= :id_line');
     $stmt->execute(array(
         'id_line' => $id_line
-    ));
-    
+    ));   
 }
+
 if ($table == '11') {
-    $stmt = $pdo->prepare('DELETE FROM clients WHERE `id`= :id_line');
+    $stmt = $pdo->prepare('DELETE FROM `clients` WHERE `id`= :id_line');
     $stmt->execute(array(
         'id_line' => $id_line
-    ));
-    
-} else {
-    $stmt = $pdo->prepare('DELETE FROM flights WHERE `id` = :id_line');
+    ));  
+} 
+
+if ($table == '20') {
+    $stmt = $pdo->prepare('DELETE FROM `flights` WHERE `id` = :id_line');
     $stmt->execute(array(
         'id_line' => $id_line
     ));
 }
 
-showTable($year, $month, $user_id);
+showTable($year, $month);
 
 ?>
 	
