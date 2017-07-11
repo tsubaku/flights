@@ -23,51 +23,8 @@ function showTable($year, $month)
     );
     $month_name = $mons[$month];
     
-    #Вытаскаваем из базы данные всех рейсов за указанный период.
-    $pdo = connectToBase();
-    $stmt        = $pdo->prepare('SELECT * FROM `flights` WHERE (data_vyezda BETWEEN :data_from AND :data_before) OR `data_vyezda` IS NULL GROUP BY `id`');
-    $data_from   = "$year" . "-" . "$month_name" . "-01";
-    $data_before = "$year" . "-" . "$month_name" . "-31";
-    $stmt->execute(array(
-        'data_from' => $data_from,
-        'data_before' => $data_before
-    ));
-    $table_array = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $table_array
-    //print_r($table_array[0]);
-    //print_r($table_array[1]['vremja']);
-    
-    $stmt = $pdo->query('SELECT `full_name` FROM `users`'); //
-    
-    $users_array = array(); //Массив фамилий зарегистрированных охранников
-    $k           = 0;
-    while ($row = $stmt->fetch()) {
-        if ($row['full_name'] != 'Менеджер') {
-            $users_array[$k] = $row['full_name'];
-            $k               = $k + 1;
-        }
-    }
-    $users_array[$k] = 'Не выбран'; //Добавляем в массив охранников невыбранного
-    
-    //Подготовить переменные и выполнить запрос к базе
-    $stmt         = $pdo->query('SELECT `client` FROM `clients`'); //
-    $client_array = array(); //Массив фамилий зарегистрированных клиентов
-    $k            = 0;
-    while ($row = $stmt->fetch()) {
-        $client_array[$k] = $row['client'];
-        $k                = $k + 1;
-    }
-    $client_array[$k] = 'Не выбран'; //Добавляем в массив невыбранного клиента
-    
-    if ($table_array != NULL) { //иначе варнинги идут, если рейсов нет
-        $column_name_array = array_keys($table_array[0]); //$column_name_array - массив имён столбцов таблицы
-        //print_r($column_name_array);
-        
-        //Рисуем таблицу
-        echo "<table>";
-        echo "<caption><strong>Рейсы за $month $year</strong></caption>"; //Название таблицы
-        echo "<tr>";
-        echo "<td><strong>№</strong></td>"; //выводим "№" 
-        $ru_rows_array = array(
+    $ru_rows_array = array(
+            "№",
             "Номер рейса",
             "Дата выезда",
             "Время",
@@ -98,13 +55,57 @@ function showTable($year, $month)
             "ЗП+Простой",
             "Статус"
         );
-
-        foreach ($ru_rows_array as $key => $value) {
-            echo "<td><strong>" . $value . "</strong></td>"; //Рисуем шапку
-        }
         
+    #Вытаскаваем из базы все данные всех рейсов за указанный период.
+    $pdo = connectToBase();
+    $stmt        = $pdo->prepare('SELECT * FROM `flights` WHERE (data_vyezda BETWEEN :data_from AND :data_before) OR `data_vyezda` IS NULL GROUP BY `id`');
+    $data_from   = "$year" . "-" . "$month_name" . "-01";
+    $data_before = "$year" . "-" . "$month_name" . "-31";
+    $stmt->execute(array(
+        'data_from' => $data_from,
+        'data_before' => $data_before
+    ));
+    $table_array = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $table_array
+    //print_r($table_array[0]);
+    //print_r($table_array[1]['vremja']);
+    
+    #Вытаскиваем все фамилии охранников
+    $stmt = $pdo->query('SELECT `full_name` FROM `users`'); //   
+    $users_array = array(); //Массив фамилий зарегистрированных охранников
+    $k           = 0;
+    while ($row = $stmt->fetch()) {
+        if ($row['full_name'] != 'Менеджер') {
+            $users_array[$k] = $row['full_name'];
+            $k               = $k + 1;
+        }
+    }
+    $users_array[$k] = 'Не выбран'; //Добавляем в массив охранников невыбранного
+    
+    #Вытаскиваем всех клиентов
+    $stmt         = $pdo->query('SELECT `client` FROM `clients`'); //
+    $client_array = array(); //Массив фамилий зарегистрированных клиентов
+    $k            = 0;
+    while ($row = $stmt->fetch()) {
+        $client_array[$k] = $row['client'];
+        $k                = $k + 1;
+    }
+    $client_array[$k] = 'Не выбран'; //Добавляем в массив невыбранного клиента
+    
+    #Рисуем таблицу рейсов
+    if ($table_array != NULL) { //иначе варнинги идут, если рейсов нет
+        
+        #Рисуем таблицу
+        echo "<table>";
+        echo "<caption><strong>Рейсы за $month $year</strong></caption>"; //Название таблицы
+        
+        #Рисуем шапку таблицы
+        echo "<tr>";
+        foreach ($ru_rows_array as $key => $value) {
+            echo "<td><strong>" . $value . "</strong></td>"; 
+        } 
         echo "</tr>";
         
+        #Рисуем строки таблицы
         $js_change_cell = "change_cell(this.value, this.id)"; //Ф-ия записи данных в ячейке при их изменении
         $js_change_list = "change_cell(GetData(this.id), this.id)"; //Ф-ия записи данных в селекте при их изменении
         foreach ($table_array as $key_id => $row_content) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
@@ -124,13 +125,13 @@ function showTable($year, $month)
                 $fio          = "";
                 switch ($column_name) {
                     case 'id':
-                        //Подготовить переменные и выполнить запрос к базе
+                        #Вытаскиваем все пути к фотографиям рейса
                         $stmt = $pdo->prepare('SELECT `path` FROM `photo` WHERE `n_flight` = :id_line');
                         $stmt->execute(array(
                             'id_line' => $id_line
                         ));
                         $photo_name_array = $stmt->fetchAll(); //Обработать запрос, переведя ВСЕ данные в массив $photo_name_array
-                        if ($photo_name_array) {
+                        if ($photo_name_array) { //Если имеется хотя бы одно фото
                             $photo = "<button type='button' class='a_button_photo' onclick='get_photo($id_line)'></button>";
                         } else {
                             $photo = "<button type='button' class='a_button_no_photo' onclick='get_photo($id_line)'></button>";
@@ -152,7 +153,7 @@ function showTable($year, $month)
                     case 'prinjatie':
                     case 'sdacha':
                         $type = "datetime-local"; //Ставим в ячейку тип "дата и время"
-                        if (isset($data)) { //хз как, но оно работает, и время показывается и прописывается правильно
+                        if (isset($data)) { //хз как, но оно работает, но время показывается и прописывается правильно
                             $data = date("Y-m-d\TH:i:s", strtotime($data));
                         }
                         $input_class = '';
@@ -197,18 +198,16 @@ function showTable($year, $month)
                         break;
                 }
                 if ($id_status == 'В рейсе') {
-                    //$writable = 'disabled="disabled"';
                     $status_class = 'completed';
                 }
-                //echo "$column_name";
                 
-                //Если столбец ФИО, то рисуем тег select со списком охранников, иначе просто 
+                //Если столбец ФИО или Клиент, то рисуем тег select со списком, иначе просто 
                 if ($column_name == 'fio') {
-                    echo "<td ><div class='$container'>$fio</div></td>"; //$data - содержимое ячейки
+                    echo "<td ><div class='$container'>$fio</div></td>"; //
                 } else if ($column_name == 'klient') {
-                    echo "<td ><div class='$container'>$klient</div></td>"; //$data - содержимое ячейки
+                    echo "<td ><div class='$container'>$klient</div></td>"; //
                 } else {
-                    echo "<td ><div class='$container'>$photo<input $readonly type='$type' id='$column_name-$id_line' name='$column_name-$id_line' class='$column_name $status_class' value='$data' onchange='$js_change_cell'></input>$button</div></td>"; //$data - содержимое ячейки
+                    echo "<td ><div class='$container'>$photo<input $readonly type='$type' id='$column_name-$id_line' name='$column_name-$id_line' class='$column_name $status_class' value='$data' onchange='$js_change_cell'></input>$button</div></td>"; //
                 }
             }
             echo "</tr>";
@@ -331,7 +330,7 @@ function connectToBase()
 
 
 # Функция проверки авторизации
-function protection($level)
+function verifyAuthorization($level)
 {
     if (empty($_COOKIE['id']) or empty($_COOKIE['hash'])) {
         # Переадресовываем браузер на страницу ошибок авторизации (нет хеша или куков)

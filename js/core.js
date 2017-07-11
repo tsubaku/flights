@@ -68,9 +68,6 @@ function GetData(name_selector)
 	}
 
 	
-	
-
-
 
 // Запись изменённой ячейки (отправка её содержимого, column и id php-скрипту)
 function change_cell(cell_value, cell_id)
@@ -101,49 +98,37 @@ function change_cell(cell_value, cell_id)
 				if ((column_in_db == 'prostoj_summa') || (column_in_db == 'stavka_bez_nds') || (column_in_db == 'stavka_s_nds')){
 					//console.log("refresh_cell");	
 					var cell_adress = "schet-" + id_in_db;
-					//console.log("schet= " + changed_cells.schet);		
-					//console.log("cell_adress= " + cell_adress);
-					//$(cell_adress).val(changed_cells.schet);
 					document.getElementById(cell_adress).value = changed_cells.schet; //Обновляем ячейку "Счёт"
 				}
-				if ( ((column_in_db == 'prinjatie') || (column_in_db == 'sdacha')) && (user_id_current == '9') ){
-					//console.log("!refresh cell fakticheskij_srok_dostavki");
-					var cell_adress = "fakticheskij_srok_dostavki-" + id_in_db;
-					//console.log("fakticheskij_srok_dostavki= " + changed_cells.fakticheskij_srok_dostavki);		
-					//console.log("cell_adress= " + cell_adress);
+				if ( ((column_in_db == 'prinjatie') || (column_in_db == 'sdacha')) && (user_id_current == 'manager') ){
+					var cell_adress = "fakticheskij_srok_dostavki-" + id_in_db;		
 
 					document.getElementById(cell_adress).value = changed_cells.fakticheskij_srok_dostavki; //Обновляем ячейку "fakticheskij_srok_dostavki"
 				}
 				if ((column_in_db == 'prostoj_chasy') || (column_in_db == 'prostoj_stavka_za_ohrannika')){
 						
 					var cell_adress = "prostoj_summa-" + id_in_db;
-					//console.log("prostoj_summa= " + changed_cells.prostoj_summa);
 					document.getElementById(cell_adress).value = changed_cells.prostoj_summa; //Обновляем ячейку "prostoj_summa"
 					
 					var cell_adress2 = "schet-" + id_in_db;
-					//console.log("schet= " + changed_cells.schet);
 					document.getElementById(cell_adress2).value = changed_cells.schet; //Обновляем ячейку "Счёт"
 				}
 				
 				if (column_in_db == 'arenda_mashin'){
 						
 					var cell_adress = "oplata_mashin-" + id_in_db;
-					//console.log("oplata_mashin= " + changed_cells.oplata_mashin);
 					document.getElementById(cell_adress).value = changed_cells.oplata_mashin; //Обновляем ячейку "oplata_mashin"
 					
 					var cell_adress = "itogo-" + id_in_db;
-					//console.log("itogo= " + changed_cells.itogo);
 					document.getElementById(cell_adress).value = changed_cells.itogo; //Обновляем ячейку "itogo"
 				}
 				
 				if ((column_in_db == 'zp') || (column_in_db == 'prostoj') || (column_in_db == 'oplata_mashin')){
 						
 					var cell_adress = "itogo-" + id_in_db;
-					//console.log("itogo= " + changed_cells.itogo);
 					document.getElementById(cell_adress).value = changed_cells.itogo; //Обновляем ячейку "itogo"
 					
 					var cell_adress = "zp_plus_prostoj-" + id_in_db;
-					//console.log("zp_plus_prostoj= " + changed_cells.zp_plus_prostoj);
 					document.getElementById(cell_adress).value = changed_cells.zp_plus_prostoj; //Обновляем ячейку "zp_plus_prostoj"
 				}
 			},

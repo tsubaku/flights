@@ -8,7 +8,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 require_once "./functions.php";
 
 $level = 'manager';
-protection($level);
+verifyAuthorization($level);
 
 $sentData = array();
 foreach ($_POST as $key => $val) {

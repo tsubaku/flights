@@ -4,9 +4,9 @@
 	
 	# Проверка авторизации пользователя
 	$level = 'user';
-	protection($level);
+	verifyAuthorization($level);
 
-	$user_info  = protection($level);
+	$user_info  = verifyAuthorization($level);
     $user_id    = $user_info['user_id'];
     $user_level = $user_info['user_level'];
     $full_name  = $user_info['full_name'];

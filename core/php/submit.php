@@ -1,11 +1,11 @@
 <?php
 // Здесь нужно сделать все проверки передавемых файлов и вывести ошибки если нужно
 	
-	require_once('./core/php/functions.php');
+	require_once('./functions.php');
 	
 	// Скрипт проверки авторизации (если не авторизован, действие всего скрипта не выполняется)
 	$level = 'user';
-	protection($level);
+	verifyAuthorization($level);
 
 $data = array();	// Переменная ответа
 
@@ -13,7 +13,7 @@ if( isset( $_GET['uploadfiles'] ) ){
     $error = false;
     $files = array();
 
-    $uploaddir = './core/uploads/'; //каталог для сохраняемых файлов
+    $uploaddir = '../uploads/'; //каталог для сохраняемых файлов
 	
 	# Создадим папку если её нет
 	//if( ! is_dir( $uploaddir ) ) mkdir( $uploaddir, 0777 );

@@ -184,7 +184,7 @@ function submitFile( jQuery ) {
 
 		// Отправляем запрос
 		$.ajax({
-			url: './submit.php?uploadfiles',
+			url: './core/php/submit.php?uploadfiles',
 			type: 'POST',
 			statbox:"status",
 			data: data1,

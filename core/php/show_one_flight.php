@@ -20,7 +20,7 @@ require_once('./functions.php');
 
 // Скрипт проверки авторизации (если не авторизован, действие всего скрипта не выполняется)
 $level = 'user';
-protection($level);
+verifyAuthorization($level);
 
 # Cоздать соединение
 $pdo = connectToBase();
