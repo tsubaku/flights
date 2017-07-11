@@ -309,6 +309,9 @@ input {
 
 
 /**** Table Column Classes *****************************************/
+.number_line {
+    width:33px;
+}
 .id {
 	width:63px;
 	display: inline-block;

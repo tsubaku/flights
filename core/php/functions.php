@@ -108,9 +108,12 @@ function showTable($year, $month)
         #Рисуем строки таблицы
         $js_change_cell = "change_cell(this.value, this.id)"; //Ф-ия записи данных в ячейке при их изменении
         $js_change_list = "change_cell(GetData(this.id), this.id)"; //Ф-ия записи данных в селекте при их изменении
-        foreach ($table_array as $key_id => $row_content) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
+       $i = 1;
+       foreach ($table_array as $key_id => $row_content) { //$key_id - номер строки в таблице, $row_content - массив ячеек в ряду
+            
             echo "<tr>";
-            echo "<td><input type='text' id='number_line$key_id' value='" . $key_id . "' disabled='disabled'> </input></td>"; //Вывод № строки
+            echo "<td><input type='text' id='number_line-$i' class='number_line' value='$i' disabled='disabled'> </input></td>"; //Вывод № строки
+             $i = $i + 1;
             $id_line   = $row_content['id']; //$id_line - id строки в БД
             $id_status = $row_content['fakticheskij_srok_dostavki']; //$id_status - status строки в БД
             foreach ($row_content as $column_name => $data) {
@@ -136,6 +139,7 @@ function showTable($year, $month)
                         } else {
                             $photo = "<button type='button' class='a_button_no_photo' onclick='get_photo($id_line)'></button>";
                         }
+                        $readonly  = "readonly";
                         $container = "container_id";
                         $button    = "<button type='button' class='a_button_delete' onclick='delete_line($data, $table);'></button>";
                         break;

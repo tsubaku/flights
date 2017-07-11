@@ -2,14 +2,38 @@
  Скрипты для интерфейса менеджера
  */
 
+ 
+//Ловим выбор месяца/года, чтобы сразу показать таблицу для этого периода
+	//year  - выбранный селектора года
+	//month - выбранный селектор месяца
+$(function()	{ 
+    var selected_year = document.getElementById("year");
+    selected_year.onchange = function(){		
+		show_flights_table();	
+	}
+}); 
+$(function()	{ 
+    var selected_month = document.getElementById("month");
+	selected_month.onchange = function(){		
+		show_flights_table();	
+	}
+}); 
 
-//Показать таблицу рейсов для user_id (Если это манагер - показать всё) //Используется только для показа таблицы менеджеру
+
+
+//После полной загрузки страницы выполнить показ таблицы для залогиненного пользователя
+window.onload=function(){
+	$('#a_show_flights_table').trigger('click');
+}	
+
+
+
+//Показать таблицу рейсов менеджеру
 function show_flights_table()
 {		
 	year = GetData('year');
 	month = GetData('month');
 	//console.log("период введён1: " + year + " " + month);
-	//console.log("user_id1: "+ user_id + " \n");
 	
 	ajax({
 		url:"./core/php/show_flights_table.php",
@@ -32,8 +56,6 @@ function show_flights_table()
 	})	
 }
 window.show_flights_table = show_flights_table;
-
-
 
 
 
@@ -70,6 +92,7 @@ function add_line()
 		
 }
 window.add_line = add_line;
+
 
 
 //При клике по номеру строки, удалить её
@@ -110,15 +133,6 @@ function delete_line (id_line, table)
 		})	  
 }
 window.delete_line = delete_line;
-
-
-
-//После полной загрузки страницы выполнить показ таблицы для залогиненного пользователя
-window.onload=function(){
-	$('#a_show_flights_table').trigger('click');
-}	
-	
-
 
 
 
@@ -173,44 +187,43 @@ function get_photo(id_line) {
 						);
 						document.getElementById("thumbs").innerHTML=''; //очищаем модальное окно
 				});
-				
-				
-				
-				
+
 			},
 			error: function (error1) {
 				console.log("eror_delete_line");
 				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
 		})	
-	
-	
+
 }
+
+
 
 // Переключение вкладок интерфейса менеджера при клике
  $(document).ready(function() { 	// вся мaгия пoсле зaгрузки стрaницы
 	$('#page1').click( function(){ 	// лoвим клик 
 		//console.log("Показать таблицу рейсов");
 		$('#layerA').css('display', 'block'); 	// Показываем
-		$('#layerB').css('display', 'none'); 	// делaем невидимым		
-		$('#clients').css('display', 'none'); 	// Делaем невидимым
+		$('#layerB').css('display', 'none'); 	// Делaем невидимым		
+		$('#clients').css('display', 'none'); 	// 
 		//$('#page1').css('font-weight', 'bold'); 	// Подсвечиваем выбранную вкладку
 	});
 	$('#page2').click( function(){ // лoвим клик 
 		//console.log("Показать список охранников");
 		$('#layerA').css('display', 'none'); 	// 
 		$('#layerB').css('display', 'block'); 	// 
-		$('#clients').css('display', 'none'); 	// Делaем невидимым
+		$('#clients').css('display', 'none'); 	// Показываем
 		show_list_guards();
 	});
 	$('#page3').click( function(){ // лoвим клик 
 		//console.log("Показать список охранников");
 		$('#layerA').css('display', 'none'); 	// 
 		$('#layerB').css('display', 'none'); 	// 
-		$('#clients').css('display', 'block'); 	// Делaем невидимым
+		$('#clients').css('display', 'block'); 	// Показываем
 		show_list_clients()
 	});
 }); 
+  
   
 
 //Формирование и показ списка охранников
@@ -234,6 +247,7 @@ function show_list_guards(){
 			}
 		})	
 }
+  
   
   
 //Регистрация охранника
@@ -271,59 +285,47 @@ function register(){
 				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА регистрации!</p>';
 			}
 		})	
-	
-	
 }
+
 
 
 //Регистрация клиента
 function register_client(){
 	var client 	= document.getElementById("client").value;
-	//var g_password 	= document.getElementById("password").value;
-	//var full_name 	= document.getElementById("full_name").value;
-	//console.log(g_login+"_"+g_password+"_"+full_name);
 	ajax({
 			url:"./core/php/register_client.php",
 			type:"POST",
 			statbox:"status",
 			data:
 			{
-				client:client,	
-				//g_password:g_password,	
-				//full_name:full_name,	
+				client:client,		
 			},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; 	//удалить значок ожидания
-				//console.log(data);
-
 				var res = JSON.parse(data);
 				if (res[1] != ""){									//Если есть ошибки, вывести их на экран
 					document.getElementById("div_register_client_error").innerHTML=res[1];
 				} else {				
 					document.getElementById("client").innerHTML='';	//Очистить поля ввода
-					//document.getElementById("password").innerHTML='';
-					//document.getElementById("full_name").innerHTML='';
 					show_list_clients();
 				}
 			},
 			error: function (error1) {
 				console.log("eror_register_client");
-				//document.getElementById("write_time_status").innerHTML='<p>ОШИБКА!</p>';
 			}
 		})		
 }
 
 //Формирование и показ списка охранников
-function show_list_clients(){
-	
+function show_list_clients(){	
 	ajax({
 			url:"./core/php/show_list_clients.php",
 			type:"POST",
 			statbox:"status",
-			data:
-			{
-				nn_line:"9",	
-			},
+			//data:
+			//{
+			//	nn_line:"9",	
+			//},
 			success: function (data) {
 				document.getElementById("status").innerHTML=''; //удалить значок ожидания
 				document.getElementById("div_list_clients").innerHTML=data; //отобразить полученные данные
@@ -332,19 +334,17 @@ function show_list_clients(){
 				console.log("eror_show_list_clients");
 			}
 		})	
-
 }
 
 
+
 //Подстановка фото в главный див при выборе миниатюры
-//https://learn.javascript.ru/task/image-gallery
 function selectPhoto(){  
     var largeImg = document.getElementById('largeImg');
     var thumbs = document.getElementById('thumbs');
     thumbs.onclick = function(e) {
       var target = e.target;
       while (target != this) {
-
         if (target.nodeName == 'A') {
           showThumbnail(target.href, target.title);
           return false;

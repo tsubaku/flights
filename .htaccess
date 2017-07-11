@@ -1,0 +1,20 @@
+
+# Запрет отображения листинга каталога
+#Options -Indexes
+Options All -Indexes
+
+
+#Защищаем .htaccess файл
+<files .htaccess|ini|php>
+  order allow,deny
+  deny from all
+</files>
+
+
+
+
+
+
+
+
+
