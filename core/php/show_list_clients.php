@@ -1,9 +1,9 @@
 <?php
-header("Content-type: text/plain; charset=utf-8");
+# Показать список клиентов
+
+header("Content-type: text/html; charset=utf-8");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
-
-// echo "Ajax проработал запрос";
 
 require_once('./functions.php');
 
@@ -26,7 +26,6 @@ $ru_rows_array = array(
     "del"
 );
 
-
 foreach ($ru_rows_array as $value) {
     echo "<td><strong>" . $value . "</strong></td>"; //Рисуем шапку
 }
@@ -43,10 +42,8 @@ foreach ($table_array as $item) {
     $button    = "<div class='container_default'><button type='button' class='a_button_delete' onclick='delete_line($id, $table_users);'></button></div>";
  
     //Вставляем в таблицу все данные, кроме id
-    echo "<td><div class='container_default'><input readonly type='text' id='client-$id' name='client-$id' class='client' value='$client' ></input></div></td>";
-    
+    echo "<td><div class='container_default'><input readonly type='text' id='client-$id' name='client-$id' class='client' value='$client' ></input></div></td>";   
     echo "<td>$button</td>";
-    
     echo "</tr>";
 }
 echo "</table>";

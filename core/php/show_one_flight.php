@@ -1,20 +1,14 @@
 <?php
-//Показать выбранный рейс охраннику
-
-// echo "Ajax проработал запрос";
+### Показать выбранный рейс охраннику
 
 $sentData = array();
 foreach ($_POST as $key => $val) {
     $sentData[$key] = $val;
 }
-$date_flights = $sentData['date']; //Дата рейса
-$user_id      = $sentData['user_id']; //ФИО человека, по которому будет создана выборка из БД
-
-//print_r($date_flights);
-
+$date_flights = $sentData['date'];      //Дата рейса
+$user_id      = $sentData['user_id'];   //ФИО человека, по которому будет создана выборка из БД
 
 $date_flights_mysql = date('Y-m-d', strtotime($date_flights)); //php date dd.mm.yyyy to mysql format 'YYYY-MM-DD'
-
 
 require_once('./functions.php');
 
@@ -24,8 +18,6 @@ verifyAuthorization($level);
 
 # Cоздать соединение
 $pdo = connectToBase();
-
-//Подготовить переменные и выполнить запрос к базе
 $stmt = $pdo->prepare('SELECT `id`,`data_vyezda`, `vremja`, `klient`, `nomer_mashiny`, `prinjatie_pod_ohranu`, `sdacha_s_ohrany`, `prinjatie`, `sdacha`, `status` FROM `flights` WHERE (`data_vyezda` = :date_flights_mysql) AND `fio` = (SELECT `full_name` FROM `users` WHERE `user_id` = :user_id) GROUP BY `id`');
 
 $stmt->execute(array(
@@ -33,8 +25,7 @@ $stmt->execute(array(
     'user_id' => $user_id
 ));
 
-//Обработать запрос, переведя ВСЕ данные в массив $table_array
-$table_array = $stmt->fetchAll();
+$table_array = $stmt->fetchAll();   //Обработать запрос, переведя ВСЕ данные в массив $table_array
 //print_r($table_array[0]);
 //print_r($table_array[0]['vremja']);
 

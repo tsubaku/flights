@@ -1,7 +1,7 @@
 <?php
-//Файл с набором функций для программы.
+##### Файл с набором функций для программы. #####
 
-//Показать таблицу рейсов за введённый период
+#Показать таблицу рейсов за введённый период
 function showTable($year, $month)
 {
     $table = '20'; //рейсы             !!! Костыль !!!
@@ -118,7 +118,7 @@ function showTable($year, $month)
             $id_status = $row_content['fakticheskij_srok_dostavki']; //$id_status - status строки в БД
             foreach ($row_content as $column_name => $data) {
                 
-                //Определяем переменные для каждой ячейки строки
+                #Определяем переменные для каждой ячейки строки
                 $button       = "";
                 $photo        = "";
                 $container    = "container_default";
@@ -205,12 +205,12 @@ function showTable($year, $month)
                     $status_class = 'completed';
                 }
                 
-                //Если столбец ФИО или Клиент, то рисуем тег select со списком, иначе просто 
+                //Если столбец ФИО или Клиент, то рисуем тег select со списком
                 if ($column_name == 'fio') {
                     echo "<td ><div class='$container'>$fio</div></td>"; //
                 } else if ($column_name == 'klient') {
                     echo "<td ><div class='$container'>$klient</div></td>"; //
-                } else {
+                } else {    //иначе просто инпут
                     echo "<td ><div class='$container'>$photo<input $readonly type='$type' id='$column_name-$id_line' name='$column_name-$id_line' class='$column_name $status_class' value='$data' onchange='$js_change_cell'></input>$button</div></td>"; //
                 }
             }
@@ -221,8 +221,6 @@ function showTable($year, $month)
         $stmt = $pdo->query('INSERT INTO flights () VALUES()'); //Добавляем пустую строку
         showTable($year, $month_name); //Заново запускаем функцию и выводим эту строку на экран
     }
-    unset($row_content); // разорвать ссылку на последний элемент
-
 }
 
 
@@ -345,8 +343,6 @@ function verifyAuthorization($level)
     
     # Cоздать соединение
     $pdo = connectToBase();
-    
-    //Подготовить переменные и выполнить запрос к базе
     $stmt      = $pdo->prepare('SELECT *,INET_NTOA(user_ip) FROM users WHERE user_id = :cookie_id LIMIT 1');
     $cookie_id = intval($_COOKIE['id']);
     $stmt->execute(array(
