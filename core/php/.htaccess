@@ -1,5 +1,26 @@
 
-	# BEGIN WordPress
+# Запрет отображения листинга каталога
+Options All -Indexes
+
+#Защищаем config.ini
+<files config.ini>
+   Order allow,deny 
+   Allow from localhost 
+   Allow from 127.0.0.1 
+   Deny from all
+</files>
+
+<files .htaccess>
+   Order allow,deny 
+   Allow from localhost 
+   Allow from 127.0.0.1 
+   Deny from all
+</files>
+
+##-----------------------------------##
+
+
+
 #	<IfModule mod_rewrite.c>
 #	RewriteEngine On
 #	RewriteBase /
@@ -9,27 +30,17 @@
 #	RewriteRule . /index.php [L]
 #	</IfModule>
 
-	# END WordPress
 	##Order Deny,Allow
 	##Deny from all 
 	##Allow from 88.86.65.166
-	
-
-
-
-# Запрет отображения листинга каталога
-#Options -Indexes
-Options All -Indexes
-
-
-
-##-----------------------------------##
-
+    
 
 #Защита файлов от внешнего доступа
 #<FilesMatch ".(htaccess|php|ini|jpg)$">
-#  Order Allow,Deny
-#  Deny from all
+#   Order allow,deny 
+#   Allow from localhost 
+#   Allow from 127.0.0.1 
+#   Deny from all
 #</FilesMatch>
 
 #Order deny,allow
@@ -38,11 +49,7 @@ Options All -Indexes
 #  Allow from all
 #</Files>
 
-#Защищаем .htaccess файл
-<files .htaccess|ini|php>
-  order allow,deny
-  deny from all
-</files>
+
 
 #Включаем отслеживание сим-ссылок
 #Options +FollowSymLinks

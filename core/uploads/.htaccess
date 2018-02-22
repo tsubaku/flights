@@ -1,0 +1,13 @@
+
+# Запрет отображения листинга каталога
+Options All -Indexes
+
+# Запрет на публичный доступ к файлам каталога
+#<FilesMatch ~ "\.(php|htm|html|js|jpg|png|gif)$">
+#  Order allow,deny
+#  Deny from all
+#</FilesMatch>
+
+# ЗАПРЕТ НА ЗАПУСК ФАЙЛА
+RemoveHandler .phtml .php .php3 .php4 .php5 .php6 .phps .cgi .exe .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .htm .html .wml
+AddType application/x-httpd-php-source .phtml .php .php3 .php4 .php5 .php6 .phps .cgi .exe .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .htm .html .wml 
